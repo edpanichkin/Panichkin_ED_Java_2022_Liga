@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.io.File;
 
 public class Main {
   private static final int MENU_COUNT = 3;
@@ -116,8 +117,10 @@ public class Main {
       System.out.println("Данные перезаписаны");
     }
     try {
-      usersList.addAll(new UserCsvLoad().loadFromCsv("src\\main\\resources\\users.csv"));
-      taskList.addAll(new TaskCsvLoad().loadFromCsv("src\\main\\resources\\tasks.csv"));
+      String resourcesPath = "src" + File.separator
+              + "main" + File.separator + "resources"  + File.separator;
+      usersList.addAll(new UserCsvLoad().loadFromCsv( resourcesPath + "users.csv"));
+      taskList.addAll(new TaskCsvLoad().loadFromCsv(resourcesPath + "tasks.csv"));
     } catch (FilePathException e) {
       MessageUtil.fileInputError();
     }
