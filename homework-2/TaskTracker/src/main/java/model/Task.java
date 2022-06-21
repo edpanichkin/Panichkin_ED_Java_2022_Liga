@@ -1,15 +1,17 @@
 package model;
 
+import java.time.LocalDate;
+
 public class Task {
 
   private int id;
   private String taskName;
   private String taskInfo;
   private int userId;
-  private String data;
+  private LocalDate data;
   private TaskStatus taskStatus;
 
-  public Task(int id, String taskName, String taskInfo, int userId, String data, TaskStatus taskStatus) {
+  public Task(int id, String taskName, String taskInfo, int userId, LocalDate data, TaskStatus taskStatus) {
     this.id = id;
     this.taskName = taskName;
     this.taskInfo = taskInfo;
@@ -24,11 +26,11 @@ public class Task {
     this.userId = userId;
   }
 
-  public String getData() {
+  public LocalDate getData() {
     return data;
   }
 
-  public void setData(String data) {
+  public void setData(LocalDate data) {
     this.data = data;
   }
 

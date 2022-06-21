@@ -19,11 +19,11 @@ abstract public class CsvLoader<T> {
   protected abstract T addObject(String[] line);
 
   public List<T> loadFromCsv(String fileName) throws FilePathException{
-    List<String> result = new ArrayList<>();
+    List<String> stringLinesFromFile = new ArrayList<>();
     List<T> list = new ArrayList<>();
     try {
-      result = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
-      for (String line : result) {
+      stringLinesFromFile = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
+      for (String line : stringLinesFromFile) {
         list.add(addObject(line.split(COMMA_DELIMITER)));
       }
     } catch (IOException e) {
