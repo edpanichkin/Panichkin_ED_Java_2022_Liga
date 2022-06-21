@@ -1,5 +1,9 @@
 package util;
 
+import model.User;
+
+import java.util.List;
+
 public class MessageUtil {
 
   public static void fileInputError() {
@@ -26,11 +30,26 @@ public class MessageUtil {
             2. Вывести список задач конкретного пользователя
             3. Поменять статус задачи конкретного пользователя
             """;
-    System.out.print(out + "\n");
+    System.out.print("\n" + out);
   }
 
-  public static void noSuchElement() {
-    System.out.println("Нет такого элемента");
+  public static void noSuchElement(String str) {
+    System.out.println("Нет такого элемента: " + str + "\n");
   }
+
+  public static void printAvailableId(List<Integer> list, String param) {
+    int i = 0;
+    System.out.println("Доступные " + param);
+    for (Integer id : list) {
+      System.out.print(id + " ");
+      i++;
+      if (i > 20) {
+        i = 0;
+        System.out.println();
+      }
+    }
+    System.out.print("\nВведите " + param);
+  }
+
 }
 

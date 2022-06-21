@@ -15,18 +15,20 @@ public class Main {
   private static final int MENU_COUNT = 3;
   private static List<User> usersList = new ArrayList<>();
   private static List<Task> taskList = new ArrayList<>();
+  private static final Scanner sc = new Scanner(System.in);
+
+  static {
+    loadDataToProgram();
+  }
 
   public static void main(String[] args) {
-    loadDataToProgram();
-
-    Scanner sc = new Scanner(System.in);
     for (; ; ) {
       MessageUtil.mainMenuMessage();
-      doMenuItem(scannerMenuInput(sc));
+      doMenuItem(scannerMenuInput());
     }
   }
 
-  private static int scannerMenuInput(Scanner sc) {
+  private static int scannerMenuInput() {
     int number;
     do {
       while (!sc.hasNextInt()) {
@@ -48,30 +50,50 @@ public class Main {
       case 0 -> loadDataToProgram();
       case 1 -> showFullState();
       case 2 -> showUserState();
-      case 3 -> changeTaskStatus(1, 3, TaskStatus.IN_WORK);
+      case 3 -> changeTaskStatus();
     }
   }
 
-  private static void saveProgramState() {
+
+  private static User findUserById(int id) {
+    Optional<User> optionalUser = usersList.stream().filter(user -> user.getId() == id).findAny();
+    return optionalUser.orElse(null);
   }
 
-  private static void changeTaskStatus(int userId, int taskId, TaskStatus taskStatus) {
-    Optional<Task> optionalTask = usersList.stream()
-            .filter(user -> user.getId() == userId)
-            .findAny()
-            .get()
-            .getTaskList().stream()
-            .filter(task -> task.getId() == taskId)
-            .findAny();
-    if (optionalTask.isPresent()) {
+  private static Task findTaskByUserAndId(User user, int id) {
+    Optional<Task> optionalTask = user.getTaskList().stream().filter(task -> task.getId() == id).findAny();
+    return optionalTask.orElse(null);
+  }
 
-      optionalTask.get().setTaskStatus(taskStatus);
-    } else {
-      MessageUtil.noSuchElement();
+  private static void changeTaskStatus() {
+    TaskStatus taskStatus = TaskStatus.DONE;
+    User user = showAvailableUsersAndGetUser();
+
+    if (user != null) {
+      MessageUtil.printAvailableId(user.getTaskList().stream().map(Task::getId).toList(), "taskId: ");
+      int taskId = sc.nextInt();
+      Task task = findTaskByUserAndId(user, taskId);
+      if (task != null) {
+        task.setTaskStatus(taskStatus);
+      } else {
+        MessageUtil.noSuchElement("TaskId: " + taskId);
+      }
     }
+  }
+
+  private static User showAvailableUsersAndGetUser() {
+    MessageUtil.printAvailableId(usersList.stream().map(User::getId).toList(), "userId: ");
+    int userId = sc.nextInt();
+    User user = findUserById(userId);
+    if (user == null) {
+        MessageUtil.noSuchElement("UserId: " + userId);
+        return null;
+      }
+    return user;
   }
 
   private static void showUserState() {
+    System.out.println(showAvailableUsersAndGetUser());
   }
 
   private static void showFullState() {
@@ -79,7 +101,7 @@ public class Main {
   }
 
   private static void loadDataToProgram() {
-    if(usersList.size() != 0 && taskList.size() != 0) {
+    if (usersList.size() != 0 && taskList.size() != 0) {
       usersList = new ArrayList<>();
       taskList = new ArrayList<>();
       System.out.println("Данные перезаписаны");
@@ -88,7 +110,6 @@ public class Main {
       usersList.addAll(new UserCsvLoad().loadFromCsv("src\\main\\resources\\users.csv"));
       taskList.addAll(new TaskCsvLoad().loadFromCsv("src\\main\\resources\\tasks.csv"));
 
-      //
     } catch (FilePathException e) {
       System.out.println("Не смогла");
     }
@@ -99,9 +120,7 @@ public class Main {
     for (Task task : taskList) {
       usersList.stream()
               .filter(user -> user.getId() == task.getUserId())
-              .findAny()
-              .get()
-              .addTask(task);
+              .findAny().ifPresent(user -> user.addTask(task));
     }
   }
 }

@@ -36,10 +36,6 @@ public class User {
     taskList.add(task);
   }
 
-  public void changeTaskStatusByTaskId(int id) {
-    taskList.stream().filter(t -> t.getId() == id).findAny().get().setTaskStatus(TaskStatus.IN_WORK);
-  }
-
   public User(int id, String userName) {
     this.id = id;
     this.userName = userName;

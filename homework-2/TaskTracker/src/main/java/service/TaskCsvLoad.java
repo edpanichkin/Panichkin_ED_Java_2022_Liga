@@ -3,7 +3,6 @@ package service;
 import model.Task;
 import model.TaskStatus;
 
-
 public class TaskCsvLoad extends CsvLoader<Task> {
 
   @Override
