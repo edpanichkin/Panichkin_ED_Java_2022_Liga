@@ -1,17 +1,11 @@
 package util;
 
-import model.User;
-
 import java.util.List;
 
 public class MessageUtil {
 
   public static void fileInputError() {
     System.out.println("! Ошибка ввода данных\n! Проверьте путь к файлу");
-  }
-
-  public static void workingText() {
-    System.out.println("\n....Вычисляю....\n");
   }
 
   public static void menuPickError() {
@@ -34,9 +28,10 @@ public class MessageUtil {
   }
 
   public static void noSuchElement(String str) {
-    System.out.println("Нет такого элемента: " + str + "\n");
+    System.out.println("Нет такого элемента: " + str);
   }
 
+  //TODO Поменять вывод на построчный...
   public static void printAvailableId(List<Integer> list, String param) {
     int i = 0;
     System.out.println("Доступные " + param);
@@ -51,5 +46,8 @@ public class MessageUtil {
     System.out.print("\nВведите " + param);
   }
 
+  public static void taskEnumStatusPrint() {
+    System.out.println("1. New / 2. In work / 3. Done");
+  }
 }
 
