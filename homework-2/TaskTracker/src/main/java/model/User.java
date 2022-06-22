@@ -1,12 +1,12 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User {
   private int id;
   private String userName;
-  private List<Task> taskList = new ArrayList<>();
+  private Map<Integer,Task> tasksMapInUser = new HashMap<>();
 
   public int getId() {
     return id;
@@ -24,16 +24,16 @@ public class User {
     this.userName = userName;
   }
 
-  public List<Task> getTaskList() {
-    return taskList;
+  public Map<Integer, Task> getTasksMapInUser() {
+    return tasksMapInUser;
   }
 
-  public void setTaskList(List<Task> taskList) {
-    this.taskList = taskList;
+  public void setTasksMapInUser(Map<Integer, Task> tasksMapInUser) {
+    this.tasksMapInUser = tasksMapInUser;
   }
 
-  public void addTask(Task task) {
-    taskList.add(task);
+  public void putTask(Task task) {
+    tasksMapInUser.put(task.getId(), task);
   }
 
   public User(int id, String userName) {
@@ -46,7 +46,7 @@ public class User {
     return "User{" +
             "id:" + id +
             ", '" + userName + '\'' +
-            ", taskList:" + taskList +
+            ", taskList:" + tasksMapInUser +
             '}';
   }
 }
