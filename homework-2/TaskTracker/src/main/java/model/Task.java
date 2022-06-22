@@ -8,15 +8,15 @@ public class Task {
   private String taskName;
   private String taskInfo;
   private int userId;
-  private LocalDate data;
+  private LocalDate date;
   private TaskStatus taskStatus;
 
-  public Task(int id, String taskName, String taskInfo, int userId, LocalDate data, TaskStatus taskStatus) {
+  public Task(int id, String taskName, String taskInfo, int userId, LocalDate date, TaskStatus taskStatus) {
     this.id = id;
     this.taskName = taskName;
     this.taskInfo = taskInfo;
     this.userId = userId;
-    this.data = data;
+    this.date = date;
     this.taskStatus = taskStatus;
   }
   public int getUserId() {
@@ -26,12 +26,12 @@ public class Task {
     this.userId = userId;
   }
 
-  public LocalDate getData() {
-    return data;
+  public LocalDate getDate() {
+    return date;
   }
 
-  public void setData(LocalDate data) {
-    this.data = data;
+  public void setDate(LocalDate date) {
+    this.date = date;
   }
 
   public int getId() {
@@ -73,7 +73,7 @@ public class Task {
             ", taskName='" + taskName + '\'' +
             ", taskInfo='" + taskInfo + '\'' +
             ", userId=" + userId +
-            ", deadLine='" + data + '\'' +
+            ", deadLine='" + date + '\'' +
             ", taskStatus=" + taskStatus +
             '}';
   }
