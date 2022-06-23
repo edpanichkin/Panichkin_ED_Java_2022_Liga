@@ -1,7 +1,8 @@
 package service;
+
 import model.User;
 
-public class UserCsvLoad extends CsvLoader<User>{
+public class UserCsvLoad extends CsvLoader<User> {
 
   @Override
   protected User parseToObject(String[] line) {

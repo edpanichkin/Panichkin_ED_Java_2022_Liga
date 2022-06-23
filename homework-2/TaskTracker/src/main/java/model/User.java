@@ -2,11 +2,12 @@ package model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class User {
   private int id;
   private String userName;
-  private Map<Integer,Task> tasksMapInUser = new HashMap<>();
+  private Map<Integer, Task> tasksMapInUser = new HashMap<>();
 
   public int getId() {
     return id;
@@ -46,7 +47,20 @@ public class User {
     return "User{" +
             "id:" + id +
             ", '" + userName + '\'' +
-            ", taskList:" + tasksMapInUser +
+            ", taskList: " + tasksMapInUser.values() +
             '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    User user = (User) o;
+    return id == user.id && userName.equals(user.userName) && Objects.equals(tasksMapInUser, user.tasksMapInUser);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, userName, tasksMapInUser);
   }
 }

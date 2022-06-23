@@ -1,6 +1,8 @@
 package util;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class MessageUtil {
 
@@ -28,18 +30,12 @@ public class MessageUtil {
   }
 
   //TODO Переделать тут все / вывод на построчный...и поменять void на String
-  public static void printAvailableId(List<Integer> list, String param) {
-    int i = 0;
-    System.out.println("Доступные " + param);
-    for (Integer id : list) {
-      System.out.print(id + " ");
-      i++;
-      if (i > 20) {
-        i = 0;
-        System.out.println();
-      }
+  public static <T> String printAvailableId(Map<Integer, T> map, String param) {
+    StringBuilder stringBuilder = new StringBuilder("Доступные " + param + "\n");
+    for(Integer item : map.keySet()) {
+      stringBuilder.append(item).append("\n");
     }
-    System.out.print("\nВведите " + param);
+    return stringBuilder.append("Введите ").append(param).toString();
   }
 
   public static String taskEnumStatusPrint() {

@@ -2,9 +2,9 @@ package model;
 
 public enum TaskStatus {
 
-  NEW("новое"),
-  IN_WORK("в работе"),
-  DONE("готово");
+  NEW("Новая"),
+  IN_WORK("В работе"),
+  DONE("Готово");
   private final String status;
 
   TaskStatus(String status) {

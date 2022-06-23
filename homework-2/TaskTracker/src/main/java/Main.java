@@ -40,12 +40,12 @@ public class Main {
     return number;
   }
 
-  public static void doMenuItem(int menu) {
-    if (menu > MENU_COUNT) {
+  public static void doMenuItem(int selectedMenuItem) {
+    if (selectedMenuItem > MENU_COUNT) {
       System.out.println(MessageUtil.menuPickError());
       return;
     }
-    switch (menu) {
+    switch (selectedMenuItem) {
       case 0 -> loadDataToProgram();
       case 1 -> showFullState();
       case 2 -> showUserState();
@@ -57,7 +57,7 @@ public class Main {
   private static void changeTaskStatus() {
     User user = showAvailableUsersAndGetUser();
     if (user != null) {
-      MessageUtil.printAvailableId(user.getTasksMapInUser().keySet().stream().toList(), "taskId: ");
+      System.out.println(MessageUtil.printAvailableId(user.getTasksMapInUser(), "taskId: "));
       int taskId = scannerMenuInput(INT_BORDERS_ID[0], INT_BORDERS_ID[1]);
       Task task = usersMap.get(user.getId()).getTasksMapInUser().get(taskId);
       if (task != null) {
@@ -72,7 +72,7 @@ public class Main {
   }
 
   private static User showAvailableUsersAndGetUser() {
-    MessageUtil.printAvailableId(usersMap.keySet().stream().toList(), "userId: ");
+    System.out.println(MessageUtil.printAvailableId(usersMap, "userId: "));
     int userId = scannerMenuInput(INT_BORDERS_ID[0], INT_BORDERS_ID[1]);
     User user = usersMap.get(userId);
     if (user == null) {

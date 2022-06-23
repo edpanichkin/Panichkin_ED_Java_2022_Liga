@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Task {
 
@@ -19,9 +20,11 @@ public class Task {
     this.date = date;
     this.taskStatus = taskStatus;
   }
+
   public int getUserId() {
     return userId;
   }
+
   public void setUserId(int userId) {
     this.userId = userId;
   }
@@ -68,13 +71,28 @@ public class Task {
 
   @Override
   public String toString() {
-    return "\n      Task{" +
-            "id=" + id +
+    return "\n   Task{" +
+            "id= " + id +
             ", taskName='" + taskName + '\'' +
             ", taskInfo='" + taskInfo + '\'' +
             ", userId=" + userId +
             ", deadLine='" + date + '\'' +
             ", taskStatus=" + taskStatus +
             '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Task task = (Task) o;
+    return id == task.id && userId == task.userId
+            && taskName.equals(task.taskName) && taskInfo.equals(task.taskInfo)
+            && date.equals(task.date) && taskStatus == task.taskStatus;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, taskName, taskInfo, userId, date, taskStatus);
   }
 }
