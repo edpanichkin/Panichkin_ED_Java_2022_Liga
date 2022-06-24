@@ -1,8 +1,6 @@
 package util;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class MessageUtil {
 
@@ -13,7 +11,6 @@ public class MessageUtil {
   public static String menuPickError() {
     return "! Выбран не верный пункт меню";
   }
-
 
   public static String mainMenuMessage() {
     return """ 
@@ -46,7 +43,7 @@ public class MessageUtil {
   //TODO Переделать тут все / вывод на построчный...и поменять void на String
   public static <T> String printAvailableId(Map<Integer, T> map, String param) {
     StringBuilder stringBuilder = new StringBuilder("Доступные " + param + "\n");
-    for(Integer item : map.keySet()) {
+    for (Integer item : map.keySet()) {
       stringBuilder.append(item).append("\n");
     }
     return stringBuilder.append("Введите ").append(param).toString();
