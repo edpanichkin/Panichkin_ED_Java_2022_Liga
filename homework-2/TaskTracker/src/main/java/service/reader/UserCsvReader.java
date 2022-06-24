@@ -1,8 +1,8 @@
-package service;
+package service.reader;
 
 import model.User;
 
-public class UserCsvLoad extends CsvLoader<User> {
+public class UserCsvReader extends CsvReader<User> {
 
   @Override
   protected User parseToObject(String[] line) {

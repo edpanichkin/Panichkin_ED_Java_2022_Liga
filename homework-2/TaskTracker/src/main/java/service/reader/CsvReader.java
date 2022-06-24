@@ -1,4 +1,4 @@
-package service;
+package service.reader;
 
 import exception.FilePathException;
 
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-abstract public class CsvLoader<T> {
+abstract public class CsvReader<T> {
   static final String COMMA_DELIMITER = ",";
 
   protected abstract T parseToObject(String[] line);

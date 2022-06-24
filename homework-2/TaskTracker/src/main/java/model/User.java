@@ -13,10 +13,6 @@ public class User {
     return id;
   }
 
-  public void setId(int id) {
-    this.id = id;
-  }
-
   public String getUserName() {
     return userName;
   }
@@ -27,10 +23,6 @@ public class User {
 
   public Map<Integer, Task> getTasksMapInUser() {
     return tasksMapInUser;
-  }
-
-  public void setTasksMapInUser(Map<Integer, Task> tasksMapInUser) {
-    this.tasksMapInUser = tasksMapInUser;
   }
 
   public void putTask(Task task) {
