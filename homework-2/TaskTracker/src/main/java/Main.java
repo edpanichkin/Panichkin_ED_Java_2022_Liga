@@ -21,7 +21,7 @@ public class Main {
 
   public static void main(String[] args) {
     loadDataToProgram();
-    for (; ; ) {
+    while (true) {
       System.out.println(MessageUtil.mainMenuMessage());
       doMenuItem(scannerMenuInput(0, MENU_COUNT));
     }
@@ -84,7 +84,12 @@ public class Main {
 
   private static void showUserState() {
     User user = showAvailableUsersAndGetUser();
-    System.out.print(user == null ? "" : user.toString());
+    if (user != null) {
+      System.out.printf("UserId %s: %s", user.getId(), user.getUserName());
+      user.getTasksMapInUser().values()
+              .stream().sorted(Comparator.comparing(t -> t.getTaskStatus().ordinal()))
+              .forEach(System.out::print);
+    }
   }
 
   private static void showFullState() {
