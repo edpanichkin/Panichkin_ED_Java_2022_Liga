@@ -9,11 +9,12 @@ import static service.crud.CrudHelper.*;
 
 public class Menu {
   private static final int MENU_COUNT = 6;
+  private static final int CRUD_MENU_COUNT = 7;
   private static final Scanner sc = new Scanner(System.in);
 
   public static void mainMenu() {
     System.out.println(MessageUtil.mainMenuMessage());
-    doMainMenuItem(scannerMenuInput(0, 6));
+    doMainMenuItem(scannerMenuInput(0, MENU_COUNT));
   }
 
   private static void doMainMenuItem(int selectedMenuItem) {
@@ -26,7 +27,7 @@ public class Menu {
       case 0 -> loadDataToProgram();
       case 1 -> showFullState();
       case 2 -> showUserState();
-      case 3 -> changeTaskStatus();
+      case 3 -> changeTaskStatusById();
       case 4 -> crudMenu();
       case 5 -> saveState();
       case 6 -> System.exit(0);
@@ -35,22 +36,23 @@ public class Menu {
 
   private static void crudMenu() {
     System.out.println(MessageUtil.crudMenuMessage());
-    doCrudMenuItem(scannerMenuInput(1, 7));
+    doCrudMenuItem(scannerMenuInput(1, CRUD_MENU_COUNT));
   }
 
   private static void doCrudMenuItem(int selectedMenuItem) {
-    if (selectedMenuItem > 6) {
+    if (selectedMenuItem > CRUD_MENU_COUNT) {
       System.out.println(MessageUtil.menuPickError());
+      crudMenu();
       return;
     }
     switch (selectedMenuItem) {
-      case 0 -> CrudHelper.addUser();
-      case 1 -> CrudHelper.editUser();
-      case 2 -> CrudHelper.deleteUser();
-      case 3 -> CrudHelper.addTask();
-      case 4 -> CrudHelper.editTask();
-      case 5 -> CrudHelper.deleteTask();
-      case 6 -> mainMenu();
+      case 1 -> CrudHelper.addUser();
+      case 2 -> CrudHelper.editUser();
+      case 3 -> CrudHelper.deleteUser();
+      case 4 -> CrudHelper.addTask();
+      case 5 -> CrudHelper.editTask();
+      case 6 -> CrudHelper.deleteTask();
+      case 7 -> mainMenu();
     }
   }
 
