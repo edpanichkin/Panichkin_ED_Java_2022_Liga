@@ -1,4 +1,4 @@
-package model;
+package ru.edpanichkin.tasktracker.model;
 
 public enum TaskStatus {
 

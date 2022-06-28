@@ -1,11 +1,6 @@
-package util;
-
-import service.crud.CrudHelper;
+package ru.edpanichkin.tasktracker.util;
 
 import java.util.Scanner;
-
-import static repository.MemoryRepository.*;
-import static service.crud.CrudHelper.*;
 
 public class Menu {
   private static final int MENU_COUNT = 6;
@@ -23,15 +18,15 @@ public class Menu {
       System.out.println(MessageUtil.menuPickError());
       return;
     }
-    switch (selectedMenuItem) {
-      case 0 -> loadDataToProgram();
-      case 1 -> showFullState();
-      case 2 -> showUserState();
-      case 3 -> changeTaskStatusById();
-      case 4 -> crudMenu();
-      case 5 -> saveState();
-      case 6 -> System.exit(0);
-    }
+//    switch (selectedMenuItem) {
+//      case 0 -> loadDataToProgram();
+//      case 1 -> showFullState();
+//      case 2 -> showUserState();
+//      case 3 -> changeTaskStatusById();
+//      case 4 -> crudMenu();
+//      case 5 -> saveState();
+//      case 6 -> System.exit(0);
+//    }
   }
 
   private static void crudMenu() {
@@ -45,15 +40,15 @@ public class Menu {
       crudMenu();
       return;
     }
-    switch (selectedMenuItem) {
-      case 1 -> CrudHelper.addUser();
-      case 2 -> CrudHelper.editUser();
-      case 3 -> CrudHelper.deleteUser();
-      case 4 -> CrudHelper.addTask();
-      case 5 -> CrudHelper.editTask();
-      case 6 -> CrudHelper.deleteTask();
-      case 7 -> mainMenu();
-    }
+//    switch (selectedMenuItem) {
+//      case 1 -> CrudHelper.addUser();
+//      case 2 -> CrudHelper.editUser();
+//      case 3 -> CrudHelper.deleteUser();
+//      case 4 -> CrudHelper.addTask();
+//      case 5 -> CrudHelper.editTask();
+//      case 6 -> CrudHelper.deleteTask();
+//      case 7 -> mainMenu();
+//    }
   }
 
   //TODO более универсальное решение

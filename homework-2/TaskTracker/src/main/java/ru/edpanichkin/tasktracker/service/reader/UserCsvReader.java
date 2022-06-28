@@ -1,6 +1,6 @@
-package service.reader;
+package ru.edpanichkin.tasktracker.service.reader;
 
-import model.User;
+import ru.edpanichkin.tasktracker.model.User;
 
 public class UserCsvReader extends CsvReader<User> {
 

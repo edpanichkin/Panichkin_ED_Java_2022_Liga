@@ -1,4 +1,4 @@
-package exception;
+package ru.edpanichkin.tasktracker.exception;
 
 public class FilePathException extends RuntimeException {
 

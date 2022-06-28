@@ -1,6 +1,6 @@
-package service.reader;
+package ru.edpanichkin.tasktracker.service.reader;
 
-import exception.FilePathException;
+import ru.edpanichkin.tasktracker.exception.FilePathException;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

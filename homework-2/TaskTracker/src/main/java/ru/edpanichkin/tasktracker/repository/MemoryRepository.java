@@ -1,14 +1,14 @@
-package repository;
+package ru.edpanichkin.tasktracker.repository;
 
-import exception.FilePathException;
-import model.Task;
-import model.TaskStatus;
-import model.User;
-import service.reader.TaskCsvReader;
-import service.reader.UserCsvReader;
-import service.writer.TaskCsvWriter;
-import service.writer.UserCsvWriter;
-import util.MessageUtil;
+import ru.edpanichkin.tasktracker.exception.FilePathException;
+import ru.edpanichkin.tasktracker.model.Task;
+import ru.edpanichkin.tasktracker.model.User;
+
+import ru.edpanichkin.tasktracker.service.reader.TaskCsvReader;
+import ru.edpanichkin.tasktracker.service.reader.UserCsvReader;
+import ru.edpanichkin.tasktracker.service.writer.TaskCsvWriter;
+import ru.edpanichkin.tasktracker.service.writer.UserCsvWriter;
+import ru.edpanichkin.tasktracker.util.MessageUtil;
 
 import java.io.File;
 import java.nio.file.Paths;

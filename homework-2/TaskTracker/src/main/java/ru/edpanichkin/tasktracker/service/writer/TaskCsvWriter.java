@@ -1,5 +1,6 @@
-package service.writer;
-import model.Task;
+package ru.edpanichkin.tasktracker.service.writer;
+import ru.edpanichkin.tasktracker.model.Task;
+
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,6 +16,6 @@ public class TaskCsvWriter extends CsvWriter<Task> {
                     task.getDate().format(formatter),
                     task.getTaskStatus().ordinal())
             .map(String::valueOf)
-            .collect(Collectors.joining(CsvWriter.COMMA_DELIMITER)) + System.lineSeparator();
+            .collect(Collectors.joining(COMMA_DELIMITER)) + System.lineSeparator();
   }
 }

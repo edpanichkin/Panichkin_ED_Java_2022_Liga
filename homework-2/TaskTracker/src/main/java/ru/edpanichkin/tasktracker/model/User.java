@@ -1,4 +1,4 @@
-package model;
+package ru.edpanichkin.tasktracker.model;
 
 import java.util.HashMap;
 import java.util.Map;

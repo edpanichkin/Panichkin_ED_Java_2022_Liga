@@ -1,18 +1,17 @@
-package service.crud;
+package ru.edpanichkin.tasktracker.service.crud;
 
-import model.Task;
-import model.TaskStatus;
-import model.User;
-import util.MessageUtil;
+import ru.edpanichkin.tasktracker.model.Task;
+import ru.edpanichkin.tasktracker.model.TaskStatus;
+import ru.edpanichkin.tasktracker.model.User;
+import ru.edpanichkin.tasktracker.util.MessageUtil;
+import ru.edpanichkin.tasktracker.repository.MemoryRepository;
+import ru.edpanichkin.tasktracker.util.Menu;
 
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
 
-import static repository.MemoryRepository.tasksMap;
-import static repository.MemoryRepository.usersMap;
-import static util.Menu.scannerMenuInput;
 
 public class CrudHelper<T> {
 
@@ -22,11 +21,11 @@ public class CrudHelper<T> {
 
   public static void deleteUser() {
     System.out.println("deleteUser");
-    usersMap.remove(showAvailableObjectsAndGetIt(usersMap).getId());
+    MemoryRepository.usersMap.remove(showAvailableObjectsAndGetIt(MemoryRepository.usersMap).getId());
   }
 
   public static void editUser() {
-    User user = showAvailableObjectsAndGetIt(usersMap);
+    User user = showAvailableObjectsAndGetIt(MemoryRepository.usersMap);
     if (user != null) {
       System.out.print(user.getUserName() + " / editUser -> Enter new name: ");
       user.setUserName(askAndGetNewValue());
@@ -44,7 +43,7 @@ public class CrudHelper<T> {
 
   public static void deleteTask() {
     System.out.println("deleteTask");
-    tasksMap.remove(showAvailableObjectsAndGetIt(tasksMap).getId());
+    MemoryRepository.tasksMap.remove(showAvailableObjectsAndGetIt(MemoryRepository.tasksMap).getId());
   }
 
   public static void editTask() {
@@ -57,7 +56,7 @@ public class CrudHelper<T> {
     if (maxId.isEmpty()) {
       return null;
     }
-    int objId = scannerMenuInput(0, maxId.get());
+    int objId = Menu.scannerMenuInput(0, maxId.get());
     T obj = map.get(objId);
     if (obj == null) {
       System.out.println(MessageUtil.noSuchElement(map.getClass().getName() + ": " + objId));
@@ -67,7 +66,7 @@ public class CrudHelper<T> {
   }
 
   public static void showUserState() {
-    User user = showAvailableObjectsAndGetIt(usersMap);
+    User user = showAvailableObjectsAndGetIt(MemoryRepository.usersMap);
     if (user != null) {
       System.out.printf("UserId %s: %s", user.getId(), user.getUserName());
       user.getTasksMapInUser().values()
@@ -77,14 +76,14 @@ public class CrudHelper<T> {
   }
 
   public static void showFullState() {
-    usersMap.values().forEach(System.out::println);
+    MemoryRepository.usersMap.values().forEach(System.out::println);
   }
 
   public static void changeTaskStatusById() {
-    Task task = showAvailableObjectsAndGetIt(tasksMap);
+    Task task = showAvailableObjectsAndGetIt(MemoryRepository.tasksMap);
     if (task != null) {
       System.out.println(MessageUtil.taskEnumStatusPrint());
-      int taskStatusIndex = scannerMenuInput(0, TaskStatus.values().length) - 1;
+      int taskStatusIndex = Menu.scannerMenuInput(0, TaskStatus.values().length) - 1;
       task.setTaskStatus(TaskStatus.values()[taskStatusIndex]);
       System.out.println(MessageUtil.updateDataMessage());
     } else {
