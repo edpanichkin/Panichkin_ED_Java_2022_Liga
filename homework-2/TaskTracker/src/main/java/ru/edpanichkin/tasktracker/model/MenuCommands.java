@@ -1,9 +1,14 @@
 package ru.edpanichkin.tasktracker.model;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.edpanichkin.tasktracker.repository.MemoryRepository;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
+@Slf4j
 public enum MenuCommands {
   EXIT("exit") {
     @Override
@@ -33,6 +38,47 @@ public enum MenuCommands {
       return "DATA was loaded to Memory db";
     }
   },
+  EDIT("EDIT") {
+    @Override
+    public String doCommand() {
+      MemoryRepository.loadDataToProgram();
+      return "DATA was loaded to Memory db";
+    }
+  },
+  DELETE("DELETE") {
+    @Override
+    public String doCommand() {
+      MemoryRepository.loadDataToProgram();
+      return "DATA was loaded to Memory db";
+    }
+  },
+  ADD("ADD") {
+    @Override
+    public String doCommand() {
+      MemoryRepository.loadDataToProgram();
+      return "DATA was loaded to Memory db";
+    }
+  },
+  VIEW("VIEW") {
+    @Override
+    public String doCommand() {
+      return "VIEW";
+    }
+
+    @Override
+    public String throwCommand(String[] command) {
+      log.error(Arrays.toString(command));
+      switch (command[1].toLowerCase()) {
+        case "task": return MemoryRepository.tasksMap.get(Integer.parseInt(command[2])).toString();
+        case "user": return MemoryRepository.usersMap.get(Integer.parseInt(command[2]))
+                .getTasksMapInUser()
+                .values()
+                .stream().sorted(Comparator.comparing(t -> t.getTaskStatus().ordinal()))
+                .collect(Collectors.toList()).toString();
+      }
+      return null;
+    }
+  },
   SAVE_STATE("save_state") {
     @Override
     public String doCommand() {
@@ -41,6 +87,7 @@ public enum MenuCommands {
     }
   };
   private final String status;
+
 
   MenuCommands(String status) {
     this.status = status;
@@ -54,10 +101,14 @@ public enum MenuCommands {
     return "??";
   }
 
+  public String throwCommand(String[] command) {
+    return Arrays.toString(command);
+  }
+
   @Override
   public String toString() {
-    return "MenuCommands{" +
-            "status='" + status + '\'' +
-            '}';
+    return status;
   }
+
+
 }
