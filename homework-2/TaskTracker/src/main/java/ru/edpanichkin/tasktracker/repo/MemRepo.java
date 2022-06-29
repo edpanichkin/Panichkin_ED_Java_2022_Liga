@@ -1,4 +1,4 @@
-package ru.edpanichkin.tasktracker.repository;
+package ru.edpanichkin.tasktracker.repo;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class MemoryRepository {
+public class MemRepo {
 
   public static String tasksFilePath;
   public static String usersFilePath;
@@ -30,10 +30,10 @@ public class MemoryRepository {
   public static Map<Integer, User> usersMap = new HashMap<>();
   public static Map<Integer, Task> tasksMap = new HashMap<>();
 
-  public MemoryRepository(@Value("${tasks.load.file}") String tasksFilePath,
-                          @Value("${users.load.file}") String usersFilePath,
-                          @Value("${tasks.write.file}") String tasksWriteFilePath,
-                          @Value("${users.write.file}") String usersWriteFilePath) {
+  public MemRepo(@Value("${tasks.load.file}") String tasksFilePath,
+                 @Value("${users.load.file}") String usersFilePath,
+                 @Value("${tasks.write.file}") String tasksWriteFilePath,
+                 @Value("${users.write.file}") String usersWriteFilePath) {
     this.tasksFilePath = tasksFilePath;
     this.usersFilePath = usersFilePath;
     this.tasksWriteFilePath = tasksWriteFilePath;
@@ -46,7 +46,7 @@ public class MemoryRepository {
   }
 
   public static void loadDataToProgram() {
-    reloadData();
+    cleanMemoryData();
     readFromFiles(usersMap, usersFilePath, new UserCsvReader());
     readFromFiles(tasksMap, tasksFilePath, new TaskCsvReader());
     combineUsersAndTasks();
@@ -66,7 +66,7 @@ public class MemoryRepository {
     }
   }
 
-  private static void reloadData() {
+  public static void cleanMemoryData() {
     if (usersMap.size() != 0 && tasksMap.size() != 0) {
       usersMap = new HashMap<>();
       tasksMap = new HashMap<>();

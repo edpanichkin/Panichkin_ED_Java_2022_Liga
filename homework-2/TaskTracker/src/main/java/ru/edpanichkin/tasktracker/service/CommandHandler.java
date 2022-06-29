@@ -2,12 +2,13 @@ package ru.edpanichkin.tasktracker.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import ru.edpanichkin.tasktracker.model.MenuCommands;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-//@Component
+@Component
 @AllArgsConstructor
 @Slf4j
 public class CommandHandler {
@@ -20,13 +21,13 @@ public class CommandHandler {
 
   public static String parseCommand() {
     String response = "ERROR: " + command + "\n" + Arrays.stream(MenuCommands.values()).collect(Collectors.toList());
-    String[] commandArgs = command.split(" ");
+    String[] commandArgs = command.split("\\s+");
     //response = String.valueOf(commandArgs.length);
     try {
       if (commandArgs.length == 1) {
         response = MenuCommands.valueOf(command.toUpperCase()).doCommand();
       }
-      if (commandArgs.length == 3) {
+      if (commandArgs.length > 1) {
         response = MenuCommands.valueOf(commandArgs[0].toUpperCase()).throwCommand(commandArgs);
       }
     } catch (IllegalArgumentException ignored) {
@@ -35,5 +36,4 @@ public class CommandHandler {
     }
     return response;
   }
-
 }
