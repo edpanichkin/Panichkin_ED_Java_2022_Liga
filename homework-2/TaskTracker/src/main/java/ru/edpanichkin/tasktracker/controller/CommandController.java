@@ -3,7 +3,6 @@ package ru.edpanichkin.tasktracker.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.edpanichkin.tasktracker.service.CommandHandler;
 
@@ -13,6 +12,6 @@ public class CommandController {
   @GetMapping("/{command}")
   @ResponseBody
   public String getCommand(@PathVariable String command) {
-    return new CommandHandler(command).parseCommand();
+    return CommandHandler.parseCommand(command);
   }
 }

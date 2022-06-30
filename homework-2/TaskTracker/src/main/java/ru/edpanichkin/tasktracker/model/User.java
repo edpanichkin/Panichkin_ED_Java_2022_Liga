@@ -26,7 +26,7 @@ public class User {
 
   @Override
   public String toString() {
-    return "User{" +
+    return "<br/>User{" +
             "id:" + id +
             ", '" + userName + '\'' +
             ", taskList: " + tasksMapInUser.values() +

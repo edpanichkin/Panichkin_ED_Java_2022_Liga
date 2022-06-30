@@ -27,8 +27,8 @@ public class Task {
 
   @Override
   public String toString() {
-    return "\n   Task{" +
-            "id= " + id +
+    return "\n <br/>   Task{" +
+            "id:" + id +
             ", taskName='" + taskName + '\'' +
             ", taskInfo='" + taskInfo + '\'' +
             ", userId=" + userId +
