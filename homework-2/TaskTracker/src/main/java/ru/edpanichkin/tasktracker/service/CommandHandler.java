@@ -12,14 +12,16 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CommandHandler {
 
+  private static final int NO_ARGS = 1;
+
   public static String parseCommand(String command) {
     String response = "ERROR: " + command + "\n" + Arrays.stream(MenuCommands.values()).collect(Collectors.toList());
     String[] commandArgs = command.split("\\s+");
     try {
-      if (commandArgs.length == 1) {
+      if (commandArgs.length == NO_ARGS) {
         response = MenuCommands.valueOf(command.toUpperCase()).doCommand();
       }
-      if (commandArgs.length > 1) {
+      if (commandArgs.length > NO_ARGS) {
         log.error("Menu " + MenuCommands.valueOf(commandArgs[0].toUpperCase()));
         response = MenuCommands.valueOf(commandArgs[0].toUpperCase().trim()).throwCommand(commandArgs);
       }

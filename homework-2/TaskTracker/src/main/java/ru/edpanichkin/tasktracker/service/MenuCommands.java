@@ -20,7 +20,7 @@ public enum MenuCommands {
   VIEW_ALL("view_all") {
     @Override
     public String doCommand() {
-      return MemRepo.usersMap.values().toString();
+      return MemRepo.getMap(EntityType.USER).values().toString();
     }
   },
   FREE_MEMORY("free_memory") {

@@ -3,6 +3,7 @@ package ru.edpanichkin.tasktracker.repo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.edpanichkin.tasktracker.exception.FilePathException;
+import ru.edpanichkin.tasktracker.model.EntityType;
 import ru.edpanichkin.tasktracker.model.Task;
 import ru.edpanichkin.tasktracker.model.User;
 
@@ -23,10 +24,10 @@ import java.util.stream.Stream;
 @Service
 public class MemRepo {
 
-  public static String tasksFilePath;
-  public static String usersFilePath;
-  public static String tasksWriteFilePath;
-  public static String usersWriteFilePath;
+  private static String tasksFilePath;
+  private static String usersFilePath;
+  private static String tasksWriteFilePath;
+  private static String usersWriteFilePath;
   public static Map<Integer, User> usersMap = new HashMap<>();
   public static Map<Integer, Task> tasksMap = new HashMap<>();
 
@@ -78,5 +79,15 @@ public class MemRepo {
     return Stream.of(filePath.split(" "))
             .map(String::valueOf)
             .collect(Collectors.joining(File.separator));
+  }
+
+  public static <T> Map<Integer, T> getMap(EntityType entityType) {
+    switch (entityType) {
+      case TASK:
+        return (Map<Integer, T>) tasksMap;
+      case USER:
+        return (Map<Integer, T>) usersMap;
+    }
+    return null;
   }
 }
