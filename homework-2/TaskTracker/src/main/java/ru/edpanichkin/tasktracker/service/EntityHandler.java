@@ -12,4 +12,5 @@ public interface EntityHandler<T> {
   String delete(String[] command);
 
   String edit(String[] command);
+
 }

@@ -16,7 +16,8 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class UserEntityHandlerImpl implements EntityHandler<User> {
-  private static Map<Integer, User> usersMap = MemRepo.getMap(EntityType.USER);
+  private static final Map<Integer, User> usersMap = MemRepo.getMap(EntityType.USER);
+
   @Override
   public EntityType getType() {
     return EntityType.USER;
@@ -26,26 +27,17 @@ public class UserEntityHandlerImpl implements EntityHandler<User> {
   public String view(String[] command) {
     log.error("USER view: " + Arrays.toString(command));
     User user = usersMap.get(Integer.parseInt(command[2]));
-    return user.getId() + " " + user.getUserName() + " " +
+    return user == null ? "USER ID ERROR" : user.getId() + " " + user.getUserName() + " " +
             user.getTasksMapInUser()
                     .values()
                     .stream().sorted(Comparator.comparing(t -> t.getTaskStatus().ordinal()))
-                    .collect(Collectors.toList()).toString();
+                    .collect(Collectors.toList());
   }
 
   @Override
   public String add(String[] command) {
     log.error("USER add: " + Arrays.toString(command));
-    //TODO Optional id method
-    int id = 0;
-    Optional<Integer> maxId = usersMap.keySet().stream().max(Integer::compare);
-    if (maxId.isPresent()) {
-      id = maxId.get() + 1;
-      log.error("MAXID " + maxId.get());
-    }
-    // 0    1     2
-    //add user userName
-    //add user Spring
+    int id = MemRepo.getNextId(EntityType.USER);
     String userName = command[2];
     User user = new User(id, userName);
     usersMap.put(id, user);
@@ -55,14 +47,24 @@ public class UserEntityHandlerImpl implements EntityHandler<User> {
   @Override
   public String delete(String[] command) {
     log.error("USER delete: " + Arrays.toString(command));
-    return usersMap.remove(Integer.parseInt(command[2])).toString();
+    int userId = Integer.parseInt(command[2]);
+    User user = usersMap.get(userId);
+    if (user == null) {
+      return "USER ID ERROR";
+    }
+    return usersMap.remove(userId).toString();
   }
 
   @Override
   public String edit(String[] command) {
     log.error("USER edit: " + Arrays.toString(command));
     int userId = Integer.parseInt(command[2]);
-    usersMap.get(userId).setUserName(command[3]);
-    return "USERID " + userId + " name changed to " + command[3];
+    String newUserName = command[3];
+    User user = usersMap.get(userId);
+    if (user == null) {
+      return "USER ID ERROR";
+    }
+    user.setUserName(newUserName);
+    return "USERID " + userId + " name changed to " + newUserName;
   }
 }

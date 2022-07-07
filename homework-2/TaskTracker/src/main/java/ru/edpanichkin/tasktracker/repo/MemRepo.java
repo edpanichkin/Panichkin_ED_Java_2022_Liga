@@ -18,6 +18,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -28,8 +29,8 @@ public class MemRepo {
   private static String usersFilePath;
   private static String tasksWriteFilePath;
   private static String usersWriteFilePath;
-  public static Map<Integer, User> usersMap = new HashMap<>();
-  public static Map<Integer, Task> tasksMap = new HashMap<>();
+  private static Map<Integer, User> usersMap = new HashMap<>();
+  private static Map<Integer, Task> tasksMap = new HashMap<>();
 
   public MemRepo(@Value("${tasks.load.file}") String tasksFilePath,
                  @Value("${users.load.file}") String usersFilePath,
@@ -89,5 +90,10 @@ public class MemRepo {
         return (Map<Integer, T>) usersMap;
     }
     return null;
+  }
+
+  public static <T> Integer getNextId(EntityType entityType) {
+    Optional<Integer> maxId = getMap(entityType).keySet().stream().max(Integer::compare);
+    return maxId.map(integer -> integer + 1).orElse(1);
   }
 }
