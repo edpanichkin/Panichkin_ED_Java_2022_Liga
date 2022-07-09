@@ -16,7 +16,7 @@ public enum ArgsMenuExecutor {
     @Override
     public String throwCommand(String[] command) {
       log.error("FROM MENU_COMMANDS " + Arrays.toString(command));
-      return necessaryArgLength(command.length, 3)
+      return necessaryArgLength(command.length, 4)
               ? EntityFactory.getCommander(EntityType.valueOf(command[1].toUpperCase())).edit(command)
               : "ERROR IN ARGS";
     }

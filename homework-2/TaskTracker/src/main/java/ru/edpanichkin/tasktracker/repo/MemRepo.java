@@ -42,6 +42,12 @@ public class MemRepo {
     this.usersWriteFilePath = usersWriteFilePath;
   }
 
+  private static String getResourcePath(String filePath) {
+    return Stream.of(filePath.split(" "))
+            .map(String::valueOf)
+            .collect(Collectors.joining(File.separator));
+  }
+
   public static void saveState() {
     new UserCsvWriter().writeToCsv(usersMap, Path.of(getResourcePath(usersWriteFilePath)));
     new TaskCsvWriter().writeToCsv(tasksMap, Path.of(getResourcePath(tasksWriteFilePath)));
@@ -74,12 +80,6 @@ public class MemRepo {
       tasksMap = new HashMap<>();
       System.out.println(MessageUtil.updateDataMessage());
     }
-  }
-
-  private static String getResourcePath(String filePath) {
-    return Stream.of(filePath.split(" "))
-            .map(String::valueOf)
-            .collect(Collectors.joining(File.separator));
   }
 
   public static <T> Map<Integer, T> getMap(EntityType entityType) {
