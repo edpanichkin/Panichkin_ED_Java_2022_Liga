@@ -1,0 +1,6 @@
+###
+GET http://localhost:8080/view_all
+###
+GET http://localhost:8080/save
+
+GET http://localhost:8080/delete task 2
