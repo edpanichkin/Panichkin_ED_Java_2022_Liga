@@ -22,10 +22,12 @@ VOLUME $APP_HOME/log
 
 WORKDIR $APP_HOME
 COPY --from=build /home/app/build/libs/*.jar ./
+COPY --from=build /home/app/build/resources/main/*.csv ./src/main/resources/
 RUN chmod -R 777 $APP_HOME
 
 EXPOSE 8080
-CMD exec java $JAVA_OPTS \
-    -Dlogs.base.dir=$LOG_FOLDER \
-    -Dspring.profiles.active=$SPRING_PROFILE \
+CMD  java \
+#     $JAVA_OPTS \
+#    -Dlogs.base.dir=$LOG_FOLDER \
+#    -Dspring.profiles.active=$SPRING_PROFILE \
     -jar $JAR_NAME
