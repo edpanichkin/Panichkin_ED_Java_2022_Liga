@@ -82,7 +82,7 @@ public class MemRepo {
     }
   }
 
-  public static <T> Map<Integer, T> getMap(EntityType entityType) {
+  public static <T> Map<Integer, T> getEntityMap(EntityType entityType) {
     switch (entityType) {
       case TASK:
         return (Map<Integer, T>) tasksMap;
@@ -93,7 +93,7 @@ public class MemRepo {
   }
 
   public static <T> Integer getNextId(EntityType entityType) {
-    Optional<Integer> maxId = getMap(entityType).keySet().stream().max(Integer::compare);
+    Optional<Integer> maxId = getEntityMap(entityType).keySet().stream().max(Integer::compare);
     return maxId.map(integer -> integer + 1).orElse(1);
   }
 }

@@ -18,7 +18,7 @@ public enum NoArgsMenuExecutor{
   VIEW_ALL("view_all") {
     @Override
     public String execute() {
-      return MemRepo.getMap(EntityType.USER).values().toString();
+      return MemRepo.getEntityMap(EntityType.USER).values().toString();
     }
   },
   FREE_MEMORY("free_memory") {
