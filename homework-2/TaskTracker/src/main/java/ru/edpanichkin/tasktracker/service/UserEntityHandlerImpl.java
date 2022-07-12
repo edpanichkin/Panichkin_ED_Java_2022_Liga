@@ -3,20 +3,18 @@ package ru.edpanichkin.tasktracker.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.edpanichkin.tasktracker.model.EntityType;
-import ru.edpanichkin.tasktracker.model.Task;
 import ru.edpanichkin.tasktracker.model.User;
 import ru.edpanichkin.tasktracker.repo.MemRepo;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
 @Slf4j
 public class UserEntityHandlerImpl implements EntityHandler<User> {
-  private static final Map<Integer, User> usersMap = MemRepo.getMap(EntityType.USER);
+  private static final Map<Integer, User> usersMap = MemRepo.getEntityMap(EntityType.USER);
 
   @Override
   public EntityType getType() {
@@ -66,5 +64,10 @@ public class UserEntityHandlerImpl implements EntityHandler<User> {
     }
     user.setUserName(newUserName);
     return "USERID " + userId + " name changed to " + newUserName;
+  }
+
+  @Override
+  public Map<Integer, User> getMap() {
+    return usersMap;
   }
 }

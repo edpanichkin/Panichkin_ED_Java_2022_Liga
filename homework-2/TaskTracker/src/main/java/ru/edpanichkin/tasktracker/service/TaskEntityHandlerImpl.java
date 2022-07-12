@@ -17,7 +17,7 @@ import java.util.Map;
 @Slf4j
 public class TaskEntityHandlerImpl implements EntityHandler<Task> {
 
-  private static final Map<Integer, Task> tasksMap = MemRepo.getMap(EntityType.TASK);
+  private static final Map<Integer, Task> tasksMap = MemRepo.getEntityMap(EntityType.TASK);
 
   @Override
   public EntityType getType() {
@@ -35,8 +35,8 @@ public class TaskEntityHandlerImpl implements EntityHandler<Task> {
 
     log.error("TASK add: " + Arrays.toString(command));
     int id = MemRepo.getNextId(EntityType.TASK);
-    // 0    1     2         3       4     5     6
-    //add task taskName taskInfo userId date taskStatus
+    // 0    1     2         3       4     5
+    //add task taskName taskInfo userId date
     //add task Spring Внесена_из_Веба 3 29.07.2022
     String taskName = command[2];
     String taskInfo = command[3];
@@ -51,11 +51,11 @@ public class TaskEntityHandlerImpl implements EntityHandler<Task> {
   public String delete(String[] command) {
     log.error("TASK delete: " + Arrays.toString(command));
     int taskId = Integer.parseInt(command[2]);
-    int userId = getId(taskId);
+    int userId = getUserIdOwner(taskId);
     if(userId == -1) {
       return "ERROR ID";
     }
-    Map<Integer, User> usersMap = MemRepo.getMap(EntityType.USER);
+    Map<Integer, User> usersMap = MemRepo.getEntityMap(EntityType.USER);
     usersMap.get(userId).getTasksMapInUser().remove(taskId);
     tasksMap.remove(taskId);
     return "DELETED TASK " + taskId + " and in userId " + userId;
@@ -70,8 +70,13 @@ public class TaskEntityHandlerImpl implements EntityHandler<Task> {
     return "TASK STATUS " + taskId + " changed to " + taskStatus;
   }
 
+  @Override
+  public Map<Integer, Task> getMap() {
+    return tasksMap;
+  }
 
-  public int getId(int taskId) {
+
+  public int getUserIdOwner(int taskId) {
     int userId;
     try {
       userId = tasksMap.get(taskId).getUserId();
