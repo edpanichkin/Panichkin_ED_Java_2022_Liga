@@ -27,13 +27,13 @@ public class TaskEntityHandlerImpl implements EntityHandler<Task> {
   @Override
   public String view(String[] command) {
     log.error("TASK view: " + Arrays.toString(command));
-    return tasksMap.get(Integer.parseInt(command[2])).toString();
+    int taskId = Integer.parseInt(command[2]);
+    return tasksMap.get(taskId).toString();
   }
 
   @Override
   public String add(String[] command) {
 
-    log.error("TASK add: " + Arrays.toString(command));
     int id = MemRepo.getNextId(EntityType.TASK);
     // 0    1     2         3       4     5
     //add task taskName taskInfo userId date
@@ -52,7 +52,7 @@ public class TaskEntityHandlerImpl implements EntityHandler<Task> {
     log.error("TASK delete: " + Arrays.toString(command));
     int taskId = Integer.parseInt(command[2]);
     int userId = getUserIdOwner(taskId);
-    if(userId == -1) {
+    if (userId == -1) {
       return "ERROR ID";
     }
     Map<Integer, User> usersMap = MemRepo.getEntityMap(EntityType.USER);

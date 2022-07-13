@@ -29,7 +29,6 @@ public class CommandHandler {
       }
     } catch (IllegalArgumentException ignored) {
       log.error(command);
-      //response = ArgsMenuExecutor.valueOf(commandArgs[0]).throwCommand(commandArgs);
     }
     return response;
   }

@@ -24,7 +24,8 @@ public class UserEntityHandlerImpl implements EntityHandler<User> {
   @Override
   public String view(String[] command) {
     log.error("USER view: " + Arrays.toString(command));
-    User user = usersMap.get(Integer.parseInt(command[2]));
+    int userId = Integer.parseInt(command[2]);
+    User user = usersMap.get(userId);
     return user == null ? "USER ID ERROR" : user.getId() + " " + user.getUserName() + " " +
             user.getTasksMapInUser()
                     .values()

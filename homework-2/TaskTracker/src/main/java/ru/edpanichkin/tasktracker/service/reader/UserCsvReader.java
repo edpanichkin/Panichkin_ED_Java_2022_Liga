@@ -6,7 +6,9 @@ public class UserCsvReader extends CsvReader<User> {
 
   @Override
   protected User parseToObject(String[] line) {
-    return new User(Integer.parseInt(line[0].trim()), line[1].trim());
+    int userId = Integer.parseInt(line[0].trim());
+    String userName = line[1].trim();
+    return new User(userId, userName);
   }
 
   @Override

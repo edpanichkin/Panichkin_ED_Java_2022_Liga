@@ -11,14 +11,14 @@ public class TaskCsvReader extends CsvReader<Task> {
 
   @Override
   protected Task parseToObject(String[] line) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-    return new Task(
-            Integer.parseInt(line[0]),
-            line[1].trim(),
-            line[2].trim(),
-            Integer.parseInt(line[3]),
-            LocalDate.parse(line[4].trim(), formatter),
-            line.length == MAX_CSV_VALUES ? TaskStatus.values()[Integer.parseInt(line[5])] : TaskStatus.NEW);
+    int taskId = Integer.parseInt(line[0]);
+    String taskName = line[1].trim();
+    String taskInfo = line[2].trim();
+    int userId = Integer.parseInt(line[3]);
+    LocalDate date = LocalDate.parse(line[4].trim(), DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    TaskStatus taskStatus = line.length == MAX_CSV_VALUES ?
+            TaskStatus.values()[Integer.parseInt(line[5])] : TaskStatus.NEW;
+    return new Task(taskId, taskName, taskInfo, userId, date, taskStatus);
   }
 
   @Override
