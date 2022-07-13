@@ -6,7 +6,6 @@ import ru.edpanichkin.tasktracker.model.EntityType;
 import ru.edpanichkin.tasktracker.model.User;
 import ru.edpanichkin.tasktracker.repo.MemRepo;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,6 +13,11 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class UserEntityHandlerImpl implements EntityHandler<User> {
+
+  private static final int ADD_USER_NAME_POS = 2;
+  private static final int USER_ID_POS = 2;
+  private static final int EDIT_USER_NAME_POS = 3;
+
   private static final Map<Integer, User> usersMap = MemRepo.getEntityMap(EntityType.USER);
 
   @Override
@@ -23,8 +27,8 @@ public class UserEntityHandlerImpl implements EntityHandler<User> {
 
   @Override
   public String view(String[] command) {
-    log.error("USER view: " + Arrays.toString(command));
-    User user = usersMap.get(Integer.parseInt(command[2]));
+    int userId = Integer.parseInt(command[USER_ID_POS]);
+    User user = usersMap.get(userId);
     return user == null ? "USER ID ERROR" : user.getId() + " " + user.getUserName() + " " +
             user.getTasksMapInUser()
                     .values()
@@ -34,9 +38,8 @@ public class UserEntityHandlerImpl implements EntityHandler<User> {
 
   @Override
   public String add(String[] command) {
-    log.error("USER add: " + Arrays.toString(command));
     int id = MemRepo.getNextId(EntityType.USER);
-    String userName = command[2];
+    String userName = command[ADD_USER_NAME_POS];
     User user = new User(id, userName);
     usersMap.put(id, user);
     return "User added / id: " + id;
@@ -44,8 +47,7 @@ public class UserEntityHandlerImpl implements EntityHandler<User> {
 
   @Override
   public String delete(String[] command) {
-    log.error("USER delete: " + Arrays.toString(command));
-    int userId = Integer.parseInt(command[2]);
+    int userId = Integer.parseInt(command[USER_ID_POS]);
     User user = usersMap.get(userId);
     if (user == null) {
       return "USER ID ERROR";
@@ -55,9 +57,8 @@ public class UserEntityHandlerImpl implements EntityHandler<User> {
 
   @Override
   public String edit(String[] command) {
-    log.error("USER edit: " + Arrays.toString(command));
-    int userId = Integer.parseInt(command[2]);
-    String newUserName = command[3];
+    int userId = Integer.parseInt(command[USER_ID_POS]);
+    String newUserName = command[EDIT_USER_NAME_POS];
     User user = usersMap.get(userId);
     if (user == null) {
       return "USER ID ERROR";

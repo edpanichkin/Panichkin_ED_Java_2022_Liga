@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public class CommandHandler {
 
   private static final int NO_ARGS = 1;
+  private static final int COMMAND_POS = 0;
 
   public static String parseCommand(String command) {
     String response = "ERROR: " + command +
@@ -21,16 +22,18 @@ public class CommandHandler {
     String[] commandArgs = command.split("\\s+");
     try {
       if (commandArgs.length == NO_ARGS) {
-        response = NoArgsMenuExecutor.valueOf(command.toUpperCase()).execute();
+        response = NoArgsMenuExecutor.valueOf(getCommandFromArgs(commandArgs)).execute();
       }
       if (commandArgs.length > NO_ARGS) {
-        log.error("Menu " + ArgsMenuExecutor.valueOf(commandArgs[0].toUpperCase()));
-        response = ArgsMenuExecutor.valueOf(commandArgs[0].toUpperCase().trim()).throwCommand(commandArgs);
+        response = ArgsMenuExecutor.valueOf(getCommandFromArgs(commandArgs)).throwCommand(commandArgs);
       }
     } catch (IllegalArgumentException ignored) {
       log.error(command);
-      //response = ArgsMenuExecutor.valueOf(commandArgs[0]).throwCommand(commandArgs);
     }
     return response;
+  }
+
+  private static String getCommandFromArgs(String[] commandArgs) {
+    return commandArgs[COMMAND_POS].toUpperCase().trim();
   }
 }

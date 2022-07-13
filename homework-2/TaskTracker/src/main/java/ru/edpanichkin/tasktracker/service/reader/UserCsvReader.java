@@ -4,9 +4,14 @@ import ru.edpanichkin.tasktracker.model.User;
 
 public class UserCsvReader extends CsvReader<User> {
 
+  private static final int USER_ID_POS = 0;
+  private static final int USER_NAME_POS = 1;
+
   @Override
   protected User parseToObject(String[] line) {
-    return new User(Integer.parseInt(line[0].trim()), line[1].trim());
+    int userId = Integer.parseInt(line[USER_ID_POS].trim());
+    String userName = line[USER_NAME_POS].trim();
+    return new User(userId, userName);
   }
 
   @Override

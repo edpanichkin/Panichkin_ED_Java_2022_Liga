@@ -1,63 +1,60 @@
 package ru.edpanichkin.tasktracker.service;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import ru.edpanichkin.tasktracker.model.EntityType;
+import ru.edpanichkin.tasktracker.util.MessageUtil;
 
 import java.util.Arrays;
 
 @Slf4j
 @AllArgsConstructor
+@Getter
 public enum ArgsMenuExecutor {
   EDIT("EDIT") {
-    // 0     1  id  status
-    //edit task 1     1
-    //edit user 1 newName
+    final static int RIGHT_EDIT_COMMAND_LENGTH = 4;
+
     @Override
     public String throwCommand(String[] command) {
-      log.error("FROM MENU_COMMANDS " + Arrays.toString(command));
-      return necessaryArgLength(command.length, 4)
-              ? EntityFactory.getCommander(EntityType.valueOf(command[1].toUpperCase())).edit(command)
-              : "ERROR IN ARGS";
+      return necessaryArgLength(command.length, RIGHT_EDIT_COMMAND_LENGTH)
+              ? EntityFactory.getCommander(getEntityType(command)).edit(command)
+              : MessageUtil.errorInArgs();
     }
   },
   DELETE("DELETE") {
-    //delete task/user id
+    final static int RIGHT_DELETE_COMMAND_LENGTH = 3;
+
     @Override
     public String throwCommand(String[] command) {
-      log.error("FROM MENU_COMMANDS " + Arrays.toString(command));
-      return necessaryArgLength(command.length, 3)
-              ? EntityFactory.getCommander(EntityType.valueOf(command[1].toUpperCase())).delete(command)
-              : "ERROR IN ARGS";
+      return necessaryArgLength(command.length, RIGHT_DELETE_COMMAND_LENGTH)
+              ? EntityFactory.getCommander(getEntityType(command)).delete(command)
+              : MessageUtil.errorInArgs();
     }
   },
   ADD("ADD") {
     @Override
     public String throwCommand(String[] command) {
-      log.error("FROM MENU_COMMANDS " + Arrays.toString(command));
-      String result = EntityFactory.getCommander(EntityType.valueOf(command[1].toUpperCase())).add(command);
+      String result = EntityFactory.getCommander(getEntityType(command)).add(command);
       return result == null ? "" : result;
     }
   },
   VIEW("VIEW") {
+    final static int RIGHT_VIEW_COMMAND_LENGTH = 3;
+
     @Override
     public String throwCommand(String[] command) {
-      log.error("FROM MENU_COMMANDS " + Arrays.toString(command));
-      return necessaryArgLength(command.length, 3)
-              ? EntityFactory.getCommander(EntityType.valueOf(command[1].toUpperCase())).view(command)
-              : "ERROR IN ARGS";
+      return necessaryArgLength(command.length, RIGHT_VIEW_COMMAND_LENGTH)
+              ? EntityFactory.getCommander(getEntityType(command)).view(command)
+              : MessageUtil.errorInArgs();
     }
   };
 
+  private static EntityType getEntityType(String[] command) {
+    return EntityType.valueOf(command[1].toUpperCase());
+  }
+
   private final String status;
-
-  public String getStatus() {
-    return status;
-  }
-
-  public String execute() {
-    return "??";
-  }
 
   public String throwCommand(String[] command) {
     return Arrays.toString(command);
