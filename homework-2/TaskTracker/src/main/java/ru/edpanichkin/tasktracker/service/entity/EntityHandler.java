@@ -1,4 +1,4 @@
-package ru.edpanichkin.tasktracker.service;
+package ru.edpanichkin.tasktracker.service.entity;
 
 import ru.edpanichkin.tasktracker.model.EntityType;
 

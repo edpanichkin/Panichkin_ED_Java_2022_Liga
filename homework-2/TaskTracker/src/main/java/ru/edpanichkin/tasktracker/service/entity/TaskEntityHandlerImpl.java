@@ -1,4 +1,4 @@
-package ru.edpanichkin.tasktracker.service;
+package ru.edpanichkin.tasktracker.service.entity;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,6 @@ import ru.edpanichkin.tasktracker.repo.MemRepo;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.Map;
 
 @Component

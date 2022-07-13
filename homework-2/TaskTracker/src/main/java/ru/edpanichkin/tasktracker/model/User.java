@@ -2,16 +2,25 @@ package ru.edpanichkin.tasktracker.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.HashMap;
 import java.util.Map;
 
 @Getter
 @Setter
 @EqualsAndHashCode
+@Entity
+@Table(name = "user")
+@NoArgsConstructor
 public class User {
-  private final int id;
+  private
+  @Id
+  int id;
   private String userName;
   private Map<Integer, Task> tasksMapInUser = new HashMap<>();
 

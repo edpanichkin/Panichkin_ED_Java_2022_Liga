@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import ru.edpanichkin.tasktracker.model.EntityType;
+import ru.edpanichkin.tasktracker.service.entity.EntityFactory;
 import ru.edpanichkin.tasktracker.util.MessageUtil;
 
 import java.util.Arrays;

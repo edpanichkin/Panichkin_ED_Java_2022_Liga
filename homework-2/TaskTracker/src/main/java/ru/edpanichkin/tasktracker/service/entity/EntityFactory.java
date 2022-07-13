@@ -1,4 +1,4 @@
-package ru.edpanichkin.tasktracker.service;
+package ru.edpanichkin.tasktracker.service.entity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

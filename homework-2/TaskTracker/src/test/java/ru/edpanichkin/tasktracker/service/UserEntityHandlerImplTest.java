@@ -5,6 +5,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ru.edpanichkin.tasktracker.model.EntityType;
 import ru.edpanichkin.tasktracker.model.User;
 import ru.edpanichkin.tasktracker.repo.MemRepo;
+import ru.edpanichkin.tasktracker.service.entity.EntityFactory;
+import ru.edpanichkin.tasktracker.service.entity.UserEntityHandlerImpl;
 
 import java.util.Comparator;
 import java.util.Map;

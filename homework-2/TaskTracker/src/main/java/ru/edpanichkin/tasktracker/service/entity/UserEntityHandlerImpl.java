@@ -1,4 +1,4 @@
-package ru.edpanichkin.tasktracker.service;
+package ru.edpanichkin.tasktracker.service.entity;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
