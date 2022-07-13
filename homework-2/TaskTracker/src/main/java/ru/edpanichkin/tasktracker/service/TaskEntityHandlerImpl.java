@@ -17,6 +17,13 @@ import java.util.Map;
 @Slf4j
 public class TaskEntityHandlerImpl implements EntityHandler<Task> {
 
+  private static final int TASK_ID_POS = 2;
+  private static final int EDIT_TASK_STATUS_POS = 3;
+  private static final int ADD_TASK_NAME_POS = 2;
+  private static final int ADD_TASK_INFO_POS = 3;
+  private static final int ADD_USER_ID_POS = 4;
+  private static final int ADD_DATE_POS = 5;
+
   private static final Map<Integer, Task> tasksMap = MemRepo.getEntityMap(EntityType.TASK);
 
   @Override
@@ -26,22 +33,17 @@ public class TaskEntityHandlerImpl implements EntityHandler<Task> {
 
   @Override
   public String view(String[] command) {
-    log.error("TASK view: " + Arrays.toString(command));
-    int taskId = Integer.parseInt(command[2]);
+    int taskId = Integer.parseInt(command[TASK_ID_POS]);
     return tasksMap.get(taskId).toString();
   }
 
   @Override
   public String add(String[] command) {
-
     int id = MemRepo.getNextId(EntityType.TASK);
-    // 0    1     2         3       4     5
-    //add task taskName taskInfo userId date
-    //add task Spring Внесена_из_Веба 3 29.07.2022
-    String taskName = command[2];
-    String taskInfo = command[3];
-    int userId = Integer.parseInt(command[4]);
-    LocalDate date = LocalDate.parse(command[5], DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    String taskName = command[ADD_TASK_NAME_POS];
+    String taskInfo = command[ADD_TASK_INFO_POS];
+    int userId = Integer.parseInt(command[ADD_USER_ID_POS]);
+    LocalDate date = LocalDate.parse(command[ADD_DATE_POS], DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     Task task = new Task(id, taskName, taskInfo, userId, date, TaskStatus.NEW);
     tasksMap.put(id, task);
     return "Task added / id: " + id;
@@ -49,8 +51,7 @@ public class TaskEntityHandlerImpl implements EntityHandler<Task> {
 
   @Override
   public String delete(String[] command) {
-    log.error("TASK delete: " + Arrays.toString(command));
-    int taskId = Integer.parseInt(command[2]);
+    int taskId = Integer.parseInt(command[TASK_ID_POS]);
     int userId = getUserIdOwner(taskId);
     if (userId == -1) {
       return "ERROR ID";
@@ -63,9 +64,8 @@ public class TaskEntityHandlerImpl implements EntityHandler<Task> {
 
   @Override
   public String edit(String[] command) {
-    log.error("TASK edit: " + Arrays.toString(command));
-    int taskId = Integer.parseInt(command[2]);
-    TaskStatus taskStatus = TaskStatus.values()[Integer.parseInt(command[3])];
+    int taskId = Integer.parseInt(command[TASK_ID_POS]);
+    TaskStatus taskStatus = TaskStatus.values()[Integer.parseInt(command[EDIT_TASK_STATUS_POS])];
     tasksMap.get(taskId).setTaskStatus(taskStatus);
     return "TASK STATUS " + taskId + " changed to " + taskStatus;
   }
@@ -74,7 +74,6 @@ public class TaskEntityHandlerImpl implements EntityHandler<Task> {
   public Map<Integer, Task> getMap() {
     return tasksMap;
   }
-
 
   public int getUserIdOwner(int taskId) {
     int userId;
