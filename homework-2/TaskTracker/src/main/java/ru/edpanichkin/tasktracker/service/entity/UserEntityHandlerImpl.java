@@ -30,8 +30,7 @@ public class UserEntityHandlerImpl implements EntityHandler<User> {
     int userId = Integer.parseInt(command[USER_ID_POS]);
     User user = usersMap.get(userId);
     return user == null ? "USER ID ERROR" : user.getId() + " " + user.getUserName() + " " +
-            user.getTasksMapInUser()
-                    .values()
+            user.getTaskList()
                     .stream().sorted(Comparator.comparing(t -> t.getTaskStatus().ordinal()))
                     .collect(Collectors.toList());
   }

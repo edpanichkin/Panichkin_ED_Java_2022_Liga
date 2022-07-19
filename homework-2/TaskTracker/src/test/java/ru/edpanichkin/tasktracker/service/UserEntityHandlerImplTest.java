@@ -30,18 +30,15 @@ class UserEntityHandlerImplTest {
     String viewUser2 = CommandHandler.parseCommand("view user 2");
     String viewUser3 = CommandHandler.parseCommand("view user 3");
     User user1 = userMap.get(1);
-    String stringUser1 = user1.getId() + " " + user1.getUserName() + " " + userMap.get(1).getTasksMapInUser()
-            .values()
+    String stringUser1 = user1.getId() + " " + user1.getUserName() + " " + userMap.get(1).getTaskList()
             .stream().sorted(Comparator.comparing(t -> t.getTaskStatus().ordinal()))
             .collect(Collectors.toList());
     User user2 = userMap.get(2);
-    String stringUser2 = user2.getId() + " " + user2.getUserName() + " " + userMap.get(2).getTasksMapInUser()
-            .values()
+    String stringUser2 = user2.getId() + " " + user2.getUserName() + " " + userMap.get(2).getTaskList()
             .stream().sorted(Comparator.comparing(t -> t.getTaskStatus().ordinal()))
             .collect(Collectors.toList());
     User user3 = userMap.get(3);
-    String stringUser3 = user3.getId() + " " + user3.getUserName() + " " + userMap.get(3).getTasksMapInUser()
-            .values()
+    String stringUser3 = user3.getId() + " " + user3.getUserName() + " " + userMap.get(3).getTaskList()
             .stream().sorted(Comparator.comparing(t -> t.getTaskStatus().ordinal()))
             .collect(Collectors.toList());
 

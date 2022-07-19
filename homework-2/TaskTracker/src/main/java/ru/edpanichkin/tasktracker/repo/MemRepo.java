@@ -70,7 +70,8 @@ public class MemRepo {
 
   private static void combineUsersAndTasks() {
     for (Task task : tasksMap.values()) {
-      usersMap.get(task.getUserId()).putTask(task);
+      System.out.println(task.getUserId() + " " + usersMap.get(task.getUserId()).toString());
+      usersMap.get(task.getUserId()).addTaskInRootList(task);
     }
   }
 

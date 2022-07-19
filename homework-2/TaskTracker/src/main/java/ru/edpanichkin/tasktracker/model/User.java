@@ -5,27 +5,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.HashMap;
-import java.util.Map;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @NoArgsConstructor
 public class User {
   private
   @Id
   int id;
   private String userName;
-  private Map<Integer, Task> tasksMapInUser = new HashMap<>();
+  @OneToMany(mappedBy = "userId")
+  private List<Task> taskList = new ArrayList<>();
 
-  public void putTask(Task task) {
-    tasksMapInUser.put(task.getId(), task);
+  public void addTaskInRootList(Task task) {
+    taskList.add(task);
   }
 
   public User(int id, String userName) {
@@ -38,7 +37,7 @@ public class User {
     return "<br/>User{" +
             "id:" + id +
             ", '" + userName + '\'' +
-            ", taskList: " + tasksMapInUser.values() +
+            ", taskList: " + taskList.toString() +
             '}';
   }
 }

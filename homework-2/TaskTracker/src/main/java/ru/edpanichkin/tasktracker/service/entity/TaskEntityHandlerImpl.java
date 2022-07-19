@@ -56,7 +56,8 @@ public class TaskEntityHandlerImpl implements EntityHandler<Task> {
       return "ERROR ID";
     }
     Map<Integer, User> usersMap = MemRepo.getEntityMap(EntityType.USER);
-    usersMap.get(userId).getTasksMapInUser().remove(taskId);
+    int taskIndexInUser = usersMap.get(userId).getTaskList().indexOf(taskId);
+    usersMap.get(userId).getTaskList().remove(tasksMap.get(taskId));
     tasksMap.remove(taskId);
     return "DELETED TASK " + taskId + " and in userId " + userId;
   }
@@ -75,7 +76,7 @@ public class TaskEntityHandlerImpl implements EntityHandler<Task> {
   }
 
   public int getUserIdOwner(int taskId) {
-    int userId;
+    int userId = -1;
     try {
       userId = tasksMap.get(taskId).getUserId();
     } catch (NullPointerException exception) {

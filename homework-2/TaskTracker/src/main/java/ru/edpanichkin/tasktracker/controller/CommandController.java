@@ -9,9 +9,20 @@ import ru.edpanichkin.tasktracker.service.CommandHandler;
 @Controller
 public class CommandController {
 
+
+
   @GetMapping("/{command}")
   @ResponseBody
   public String getCommand(@PathVariable String command) {
     return CommandHandler.parseCommand(command);
   }
+
+//
+//  @GetMapping("/sort/{command}")
+//  @ResponseBody
+//  public String getSortWithParam(@PathVariable String command) {
+//    return CommandHandler.parseCommand(command);
+//  }
 }
+
+//  Specification и hibernate-jpamodelgen

@@ -2,6 +2,7 @@ package ru.edpanichkin.tasktracker.service.reader;
 
 import ru.edpanichkin.tasktracker.model.Task;
 import ru.edpanichkin.tasktracker.model.TaskStatus;
+import ru.edpanichkin.tasktracker.model.User;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
