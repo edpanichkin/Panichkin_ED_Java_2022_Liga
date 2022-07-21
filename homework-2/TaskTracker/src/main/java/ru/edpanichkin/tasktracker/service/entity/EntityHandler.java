@@ -15,6 +15,4 @@ public interface EntityHandler<T> {
 
   String edit(String[] command);
 
-  Map<Integer, T> getMap();
-
 }

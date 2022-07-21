@@ -14,11 +14,18 @@ import java.time.LocalDate;
 
 public class Task {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "task_name")
     private String taskName;
+    @Column(name = "task_info")
     private String taskInfo;
-    private int userId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id")
+    private User user;
+    @Column(name = "date")
     private LocalDate date;
+    @Column(name = "task_status")
     private TaskStatus taskStatus;
 
     @Override
@@ -27,7 +34,7 @@ public class Task {
                 "id=" + id +
                 ", taskName='" + taskName + '\'' +
                 ", taskInfo='" + taskInfo + '\'' +
-                ", userId=" + userId +
+                ", userId=" + user.getId() +
                 ", date=" + date +
                 ", taskStatus=" + taskStatus +
                 '}';

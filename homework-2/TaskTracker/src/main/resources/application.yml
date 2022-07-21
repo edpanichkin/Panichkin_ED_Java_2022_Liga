@@ -1,29 +1,18 @@
-tasks:
-  load:
-    file: src main resources tasks.csv
-  write:
-    file: src main resources writetasks.csv
-users:
-  load:
-    file: src main resources users.csv
-  write:
-    file: src main resources writeusers.csv
-
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/test?useUnicode=true&charSet=UTF8
+    url: jdbc:postgresql://localhost:5432/taskTrackerDB
     username: user
     password: user
     driverClassName: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
     show-sql: true
-#  h2:
-#    console:
-#      enabled: true
-#      path: /h2-console
-#      settings:
-#        trace: false
-#        web-allow-others: false
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  flyway:
+    enabled: true
