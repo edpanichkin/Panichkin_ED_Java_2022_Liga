@@ -10,20 +10,20 @@ import java.util.Map;
 
 @Component
 public class EntityFactory {
-  private static final Map<EntityType, EntityHandler> entityTypeMap = new EnumMap<>(EntityType.class);
+  private static final Map<EntityType, EntityTypeHandler> entityTypeMap = new EnumMap<>(EntityType.class);
 
   @Autowired
-  private EntityFactory(List<EntityHandler> entityHandlerList) {
-    for (EntityHandler entityHandler : entityHandlerList) {
-      entityTypeMap.put(entityHandler.getType(), entityHandler);
+  private EntityFactory(List<EntityTypeHandler> entityTypeHandlerList) {
+    for (EntityTypeHandler entityTypeHandler : entityTypeHandlerList) {
+      entityTypeMap.put(entityTypeHandler.getType(), entityTypeHandler);
     }
   }
 
-  public static <T> EntityHandler<T> getCommander(EntityType entityType) {
-    EntityHandler<T> entityHandler = entityTypeMap.get(entityType);
-    if (entityHandler == null) {
+  public static <T> EntityTypeHandler<T> getCommander(EntityType entityType) {
+    EntityTypeHandler<T> entityTypeHandler = entityTypeMap.get(entityType);
+    if (entityTypeHandler == null) {
       throw new IllegalArgumentException();
     }
-    return entityHandler;
+    return entityTypeHandler;
   }
 }

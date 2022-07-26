@@ -2,9 +2,7 @@ package ru.edpanichkin.tasktracker.service.entity;
 
 import ru.edpanichkin.tasktracker.model.EntityType;
 
-import java.util.Map;
-
-public interface EntityHandler<T> {
+public interface EntityTypeHandler<T> {
   EntityType getType();
 
   String view(String[] command);

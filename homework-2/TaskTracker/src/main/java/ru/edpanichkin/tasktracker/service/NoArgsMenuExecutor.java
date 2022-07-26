@@ -1,55 +1,44 @@
 package ru.edpanichkin.tasktracker.service;
 
 import lombok.extern.slf4j.Slf4j;
+import ru.edpanichkin.tasktracker.model.EntityType;
+import ru.edpanichkin.tasktracker.service.entity.EntityFactory;
 import ru.edpanichkin.tasktracker.util.MessageUtil;
 
 @Slf4j
 public enum NoArgsMenuExecutor {
 
-    EXIT("exit") {
+    EXIT {
         @Override
         public String execute() {
             System.exit(0);
             return MessageUtil.shutDownMessage();
         }
     },
-    VIEW_ALL("view_all") {
+    VIEW_ALL {
         @Override
         public String execute() {
-            return "   ";
+            return EntityFactory.getCommander(EntityType.MENU).view(new String[]{});
         }
     },
-    FREE_MEMORY("free_memory") {
+    FREE_MEMORY {
         @Override
         public String execute() {
-//      MemRepo.cleanMemoryData();
-            return MessageUtil.cleanedMemoryMessage();
+            return EntityFactory.getCommander(EntityType.MENU).delete(new String[]{});
         }
     },
-    LOAD_DATA("load_data") {
+    LOAD_DATA {
         @Override
         public String execute() {
-//      MemRepo.loadDataToProgram();
-            return MessageUtil.loadDataMessage();
+            return EntityFactory.getCommander(EntityType.MENU).add(new String[]{});
         }
     },
-    SAVE("SAVE") {
+    SAVE {
         @Override
         public String execute() {
-//      MemRepo.saveState();
-            return MessageUtil.saveDataMessage();
+            return EntityFactory.getCommander(EntityType.MENU).edit(new String[]{});
         }
     };
-
-    private final String status;
-
-    NoArgsMenuExecutor(String status) {
-        this.status = status;
-    }
-
-    public String getStatus() {
-        return status;
-    }
 
     public String execute() {
         return "";

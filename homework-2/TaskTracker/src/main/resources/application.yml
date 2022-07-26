@@ -1,3 +1,8 @@
+tasks:
+  file: src main resources tasks.csv
+users:
+  file: src main resources users.csv
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/taskTrackerDB

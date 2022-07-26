@@ -9,6 +9,8 @@ import ru.edpanichkin.tasktracker.model.TaskStatus;
 import ru.edpanichkin.tasktracker.model.User;
 import ru.edpanichkin.tasktracker.repo.TaskRepo;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +24,10 @@ public class TaskRepoService {
 
     public void delete(Integer id) {
         taskRepo.delete(getById(id));
+    }
+
+    public void clearState() {
+        taskRepo.deleteAll();
     }
 
     @Transactional
@@ -45,5 +51,9 @@ public class TaskRepoService {
         task.setTaskStatus(taskStatus);
         taskRepo.save(task);
         return "UPDATE";
+    }
+
+    public List<Task> findAll() {
+        return taskRepo.findAll();
     }
 }

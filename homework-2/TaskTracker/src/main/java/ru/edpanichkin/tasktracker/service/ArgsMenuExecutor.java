@@ -1,6 +1,5 @@
 package ru.edpanichkin.tasktracker.service;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import ru.edpanichkin.tasktracker.model.EntityType;
@@ -10,10 +9,9 @@ import ru.edpanichkin.tasktracker.util.MessageUtil;
 import java.util.Arrays;
 
 @Slf4j
-@AllArgsConstructor
 @Getter
 public enum ArgsMenuExecutor {
-  EDIT("EDIT") {
+  EDIT {
     final static int RIGHT_EDIT_COMMAND_LENGTH = 4;
 
     @Override
@@ -23,7 +21,7 @@ public enum ArgsMenuExecutor {
               : MessageUtil.errorInArgs();
     }
   },
-  DELETE("DELETE") {
+  DELETE {
     final static int RIGHT_DELETE_COMMAND_LENGTH = 3;
 
     @Override
@@ -33,14 +31,14 @@ public enum ArgsMenuExecutor {
               : MessageUtil.errorInArgs();
     }
   },
-  ADD("ADD") {
+  ADD {
     @Override
     public String throwCommand(String[] command) {
       String result = EntityFactory.getCommander(getEntityType(command)).add(command);
       return result == null ? "" : result;
     }
   },
-  VIEW("VIEW") {
+  VIEW {
     final static int RIGHT_VIEW_COMMAND_LENGTH = 3;
 
     @Override
@@ -51,23 +49,17 @@ public enum ArgsMenuExecutor {
     }
   };
 
-  private static EntityType getEntityType(String[] command) {
-    return EntityType.valueOf(command[1].toUpperCase());
-  }
+  final static int ENTITY_COMMAND_POS = 1;
 
-  private final String status;
+  private static EntityType getEntityType(String[] command) {
+    return EntityType.valueOf(command[ENTITY_COMMAND_POS].toUpperCase());
+  }
 
   public String throwCommand(String[] command) {
     return Arrays.toString(command);
   }
 
-  @Override
-  public String toString() {
-    return status;
-  }
-
   public boolean necessaryArgLength(int length, int needLength) {
-
     return length == needLength;
   }
 }
