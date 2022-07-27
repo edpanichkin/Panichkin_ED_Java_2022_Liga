@@ -1,10 +1,11 @@
 package ru.edpanichkin.tasktracker.service.writer;
 
-import ru.edpanichkin.tasktracker.model.User;
+import ru.edpanichkin.tasktracker.dto.UserFullDto;
 
-public class UserCsvWriter extends CsvWriter<User>{
+public class UserCsvWriter extends CsvWriter<UserFullDto>{
   @Override
-  protected String objToStringForCsv(User obj) {
-    return obj.getId() + COMMA_DELIMITER + obj.getUserName() + System.lineSeparator();
+  protected String objToStringForCsv(UserFullDto user) {
+    return user.getId() + COMMA_DELIMITER + user.getUserName() + System.lineSeparator();
   }
 }
+

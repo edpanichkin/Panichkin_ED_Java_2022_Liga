@@ -15,7 +15,6 @@ abstract public class CsvWriter<T> {
 
 
   public void writeToCsv(Map<Integer, T> map, Path path) throws FilePathException {
-//    Path path = Paths.get("src","main", "resources", "writeTask.csv");
     System.out.println(path);
     try {
       Files.writeString(path, "");

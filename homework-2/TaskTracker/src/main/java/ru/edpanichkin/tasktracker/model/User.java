@@ -1,35 +1,32 @@
 package ru.edpanichkin.tasktracker.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.persistence.*;
+import java.util.List;
 
-@Getter
-@Setter
-@EqualsAndHashCode
+@Entity
+@Table(name = "users")
+@Data
 public class User {
-  private final int id;
-  private String userName;
-  private Map<Integer, Task> tasksMapInUser = new HashMap<>();
+    private
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
+    @Column(name = "user_name")
+    private String userName;
+    @OneToMany(mappedBy = "user")
+    @Fetch(FetchMode.SUBSELECT)
+    private List<Task> taskList;
 
-  public void putTask(Task task) {
-    tasksMapInUser.put(task.getId(), task);
-  }
-
-  public User(int id, String userName) {
-    this.id = id;
-    this.userName = userName;
-  }
-
-  @Override
-  public String toString() {
-    return "<br/>User{" +
-            "id:" + id +
-            ", '" + userName + '\'' +
-            ", taskList: " + tasksMapInUser.values() +
-            '}';
-  }
+    @Override
+    public String toString() {
+        return "<br/>User{" +
+                "id:" + id +
+                ", '" + userName + '\'' +
+                ", taskList: " + taskList.toString() +
+                '}';
+    }
 }

@@ -1,99 +1,85 @@
 package ru.edpanichkin.tasktracker.repo;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import ru.edpanichkin.tasktracker.exception.FilePathException;
-import ru.edpanichkin.tasktracker.model.EntityType;
+import ru.edpanichkin.tasktracker.dto.TaskFullDto;
+import ru.edpanichkin.tasktracker.dto.UserFullDto;
 import ru.edpanichkin.tasktracker.model.Task;
 import ru.edpanichkin.tasktracker.model.User;
-
-import ru.edpanichkin.tasktracker.service.reader.CsvReader;
-import ru.edpanichkin.tasktracker.service.reader.TaskCsvReader;
-import ru.edpanichkin.tasktracker.service.reader.UserCsvReader;
+import ru.edpanichkin.tasktracker.service.TaskRepoService;
+import ru.edpanichkin.tasktracker.service.UserRepoService;
 import ru.edpanichkin.tasktracker.service.writer.TaskCsvWriter;
 import ru.edpanichkin.tasktracker.service.writer.UserCsvWriter;
-import ru.edpanichkin.tasktracker.util.MessageUtil;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Service
+@RequiredArgsConstructor
+@Component
 public class MemRepo {
 
   private static String tasksFilePath;
   private static String usersFilePath;
-  private static String tasksWriteFilePath;
-  private static String usersWriteFilePath;
-  private static Map<Integer, User> usersMap = new HashMap<>();
-  private static Map<Integer, Task> tasksMap = new HashMap<>();
+  private static Map<Integer, UserFullDto> usersMap;
+  private static Map<Integer, TaskFullDto> tasksMap;
 
-  public MemRepo(@Value("${tasks.load.file}") String tasksFilePath,
-                 @Value("${users.load.file}") String usersFilePath,
-                 @Value("${tasks.write.file}") String tasksWriteFilePath,
-                 @Value("${users.write.file}") String usersWriteFilePath) {
+  private final UserRepoService userRepoService;
+  private final TaskRepoService taskRepoService;
+
+  @Autowired
+  public MemRepo(@Value("${tasks.file}") String tasksFilePath,
+                 @Value("${users.file}") String usersFilePath,
+                 UserRepoService userRepoService,
+                 TaskRepoService taskRepoService) {
     this.tasksFilePath = tasksFilePath;
     this.usersFilePath = usersFilePath;
-    this.tasksWriteFilePath = tasksWriteFilePath;
-    this.usersWriteFilePath = usersWriteFilePath;
+    this.userRepoService = userRepoService;
+    this.taskRepoService = taskRepoService;
+
   }
 
-  private static String getResourcePath(String filePath) {
+  private String getResourcePath(String filePath) {
     return Stream.of(filePath.split(" "))
             .map(String::valueOf)
             .collect(Collectors.joining(File.separator));
   }
 
-  public static void saveState() {
-    new UserCsvWriter().writeToCsv(usersMap, Path.of(getResourcePath(usersWriteFilePath)));
-    new TaskCsvWriter().writeToCsv(tasksMap, Path.of(getResourcePath(tasksWriteFilePath)));
+  public void saveState() {
+    createUserMap();
+    createTaskMap();
+    new UserCsvWriter().writeToCsv(usersMap, Path.of(getResourcePath(usersFilePath)));
+    new TaskCsvWriter().writeToCsv(tasksMap, Path.of(getResourcePath(tasksFilePath)));
   }
 
-  public static void loadDataToProgram() {
-    cleanMemoryData();
-    readFromFiles(usersMap, usersFilePath, new UserCsvReader());
-    readFromFiles(tasksMap, tasksFilePath, new TaskCsvReader());
-    combineUsersAndTasks();
-  }
-
-  private static <T> void readFromFiles(Map<Integer, T> map, String filePath, CsvReader csvReader) {
-    try {
-      map.putAll(csvReader.loadFromCsv(getResourcePath(filePath)));
-    } catch (FilePathException e) {
-      System.out.println(MessageUtil.fileInputError());
+  private void createUserMap() {
+    usersMap = new HashMap<>();
+    List<User> listUsers = userRepoService.findAll();
+    for(User user : listUsers) {
+      UserFullDto userFullDto = new UserFullDto(user.getId(), user.getUserName());
+      usersMap.put(userFullDto.getId(), userFullDto);
     }
   }
 
-  private static void combineUsersAndTasks() {
-    for (Task task : tasksMap.values()) {
-      usersMap.get(task.getUserId()).putTask(task);
+  private void createTaskMap() {
+    tasksMap = new HashMap<>();
+    List<Task> listTasks = taskRepoService.findAll();
+    for(Task task : listTasks) {
+      TaskFullDto taskFullDto = new TaskFullDto();
+      taskFullDto.setId(task.getId());
+      taskFullDto.setTaskName(task.getTaskName());
+      taskFullDto.setTaskInfo(task.getTaskInfo());
+      taskFullDto.setUserId(task.getUser().getId());
+      taskFullDto.setDate(task.getDate());
+      taskFullDto.setTaskStatus(task.getTaskStatus());
+      tasksMap.put(taskFullDto.getId(), taskFullDto);
     }
-  }
-
-  public static void cleanMemoryData() {
-    if (usersMap.size() != 0 && tasksMap.size() != 0) {
-      usersMap = new HashMap<>();
-      tasksMap = new HashMap<>();
-      System.out.println(MessageUtil.updateDataMessage());
-    }
-  }
-
-  public static <T> Map<Integer, T> getEntityMap(EntityType entityType) {
-    switch (entityType) {
-      case TASK:
-        return (Map<Integer, T>) tasksMap;
-      case USER:
-        return (Map<Integer, T>) usersMap;
-    }
-    return null;
-  }
-
-  public static <T> Integer getNextId(EntityType entityType) {
-    Optional<Integer> maxId = getEntityMap(entityType).keySet().stream().max(Integer::compare);
-    return maxId.map(integer -> integer + 1).orElse(1);
   }
 }

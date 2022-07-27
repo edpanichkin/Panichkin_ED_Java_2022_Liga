@@ -1,10 +1,8 @@
-package ru.edpanichkin.tasktracker.service;
+package ru.edpanichkin.tasktracker.service.entity;
 
 import ru.edpanichkin.tasktracker.model.EntityType;
 
-import java.util.Map;
-
-public interface EntityHandler<T> {
+public interface EntityTypeHandler<T> {
   EntityType getType();
 
   String view(String[] command);
@@ -14,7 +12,5 @@ public interface EntityHandler<T> {
   String delete(String[] command);
 
   String edit(String[] command);
-
-  Map<Integer, T> getMap();
 
 }

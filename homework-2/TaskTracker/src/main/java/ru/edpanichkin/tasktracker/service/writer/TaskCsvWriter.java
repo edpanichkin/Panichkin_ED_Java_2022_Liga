@@ -1,13 +1,14 @@
 package ru.edpanichkin.tasktracker.service.writer;
+import ru.edpanichkin.tasktracker.dto.TaskFullDto;
 import ru.edpanichkin.tasktracker.model.Task;
 
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class TaskCsvWriter extends CsvWriter<Task> {
+public class TaskCsvWriter extends CsvWriter<TaskFullDto> {
   @Override
-  protected String objToStringForCsv(Task task) {
+  protected String objToStringForCsv(TaskFullDto task) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     return Stream.of(task.getId(),
                     task.getTaskName(),

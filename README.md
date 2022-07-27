@@ -2,15 +2,18 @@
 
 NO ARGS:
 /view_all
+
+/save
+
 /free_memory
-/load_data
+
 /exit
 
 WITH ARGS
 /view task {id}
 /view user {id}
 
-/edit task {id} {new status id} {userId} {deadLine date}
+/edit task {id} {new status id}
 /edit user {id} {new userName}
 
 /add task {taskName} {taskInfo} {}
