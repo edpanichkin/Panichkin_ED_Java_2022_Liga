@@ -1,11 +1,14 @@
 package ru.edpanichkin.tasktracker.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.edpanichkin.tasktracker.model.Task;
 import ru.edpanichkin.tasktracker.model.User;
 import ru.edpanichkin.tasktracker.repo.UserRepo;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -43,5 +46,12 @@ public class UserRepoService {
 
   public List<User> findAll() {
     return userRepo.findAll();
+  }
+
+  public Object findUserWithMaxQuantityOfTasks(String type, LocalDate minDate, LocalDate maxDate) {
+    Specification<Task> tasksSpec = TasksSpecificationProvider.getTasksSpecification(type, minDate, maxDate);
+    Object mayBeUser = userRepo.findUserWithMaxQuantityOfTasks(tasksSpec);
+    System.out.println(mayBeUser.toString());
+    return mayBeUser;
   }
 }

@@ -11,10 +11,11 @@ import java.util.List;
 @Table(name = "users")
 @Data
 public class User {
-    private
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    @Column(name = "id")
+    private Integer id;
     @Column(name = "user_name")
     private String userName;
     @OneToMany(mappedBy = "user")
