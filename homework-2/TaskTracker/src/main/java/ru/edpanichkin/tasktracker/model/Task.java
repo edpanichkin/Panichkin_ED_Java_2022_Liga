@@ -7,7 +7,9 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "tasks")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

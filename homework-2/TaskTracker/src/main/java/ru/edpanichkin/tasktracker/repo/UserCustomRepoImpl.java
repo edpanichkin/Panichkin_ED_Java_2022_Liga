@@ -11,6 +11,7 @@ import ru.edpanichkin.tasktracker.model.User_;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.*;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -35,6 +36,6 @@ public class UserCustomRepoImpl implements UserCustomRepo {
       userResult = em.createQuery(cq).setMaxResults(1).getSingleResult();
     } catch (NoResultException ignored) {
     }
-    return userResult;
+    return Optional.ofNullable(userResult);
   }
 }
