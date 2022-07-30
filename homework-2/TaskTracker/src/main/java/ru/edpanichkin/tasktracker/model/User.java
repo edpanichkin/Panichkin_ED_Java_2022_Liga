@@ -9,12 +9,15 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class User {
-    private
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    @Column(name = "id")
+    private Integer id;
     @Column(name = "user_name")
     private String userName;
     @OneToMany(mappedBy = "user")

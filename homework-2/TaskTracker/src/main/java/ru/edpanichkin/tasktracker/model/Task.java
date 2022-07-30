@@ -5,17 +5,16 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "tasks")
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
-
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "id")
+    private Integer id;
     @Column(name = "task_name")
     private String taskName;
     @Column(name = "task_info")

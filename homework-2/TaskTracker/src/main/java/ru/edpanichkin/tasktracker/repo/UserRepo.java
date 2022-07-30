@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import ru.edpanichkin.tasktracker.model.User;
 
 @Repository
-public interface UserRepo extends JpaRepository<User, Integer> {
+public interface UserRepo extends JpaRepository<User, Integer>, UserCustomRepo {
 }
