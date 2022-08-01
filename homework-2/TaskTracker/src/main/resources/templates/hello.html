@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <title>INDEX</title>
@@ -10,7 +10,9 @@
 
 <body>
 <h2>Hello</h2><br/>
-<a href="/logout">Logout</a>
+<form th:action="@{/logout}" th:method="POST">
+    <input type="submit" value="Logout"/>
+</form>
 </body>
 
 </html>
