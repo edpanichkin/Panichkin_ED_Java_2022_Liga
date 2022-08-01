@@ -35,12 +35,12 @@ public class UserRepoService {
   }
 
   @Transactional
-  public String edit(int userId, String newUserName) {
+  public String edit(int userId, String newUsername) {
     User user = getById(userId);
     if (user == null) {
       return "ERROR USER ID";
     }
-    user.setUserName(newUserName);
+    user.setUsername(newUsername);
     userRepo.save(user);
     return "UPDATE";
   }

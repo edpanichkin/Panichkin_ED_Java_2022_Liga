@@ -5,6 +5,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
@@ -19,8 +20,12 @@ public class User {
     @Column(name = "id")
     private Integer id;
     @Column(name = "user_name")
-    private String userName;
-    @OneToMany(mappedBy = "user")
+    @NotEmpty
+    private String username;
+    @Column(name = "password")
+    @NotEmpty
+    private String password;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     @Fetch(FetchMode.SUBSELECT)
     private List<Task> taskList;
 
@@ -28,7 +33,7 @@ public class User {
     public String toString() {
         return "<br/>User{" +
                 "id:" + id +
-                ", '" + userName + '\'' +
+                ", '" + username + '\'' +
                 ", taskList: " + taskList.toString() +
                 '}';
     }

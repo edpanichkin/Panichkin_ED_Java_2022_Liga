@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import ru.edpanichkin.tasktracker.dto.TaskFullDto;
 import ru.edpanichkin.tasktracker.dto.UserFullDto;
 import ru.edpanichkin.tasktracker.model.Task;
@@ -63,7 +62,7 @@ public class MemRepo {
     usersMap = new HashMap<>();
     List<User> listUsers = userRepoService.findAll();
     for(User user : listUsers) {
-      UserFullDto userFullDto = new UserFullDto(user.getId(), user.getUserName());
+      UserFullDto userFullDto = new UserFullDto(user.getId(), user.getUsername());
       usersMap.put(userFullDto.getId(), userFullDto);
     }
   }

@@ -32,7 +32,7 @@ public class UserEntityTypeHandlerImpl implements EntityTypeHandler<User> {
   public String view(String[] command) {
     int userId = Integer.parseInt(command[USER_ID_POS]);
     User user = userRepoService.getById(userId);
-    return user == null ? "USER ID ERROR" : user.getId() + " " + user.getUserName() + " " +
+    return user == null ? "USER ID ERROR" : user.getId() + " " + user.getUsername() + " " +
             user.getTaskList()
                     .stream().sorted(Comparator.comparing(t -> t.getTaskStatus().ordinal()))
                     .collect(Collectors.toList());
@@ -42,7 +42,7 @@ public class UserEntityTypeHandlerImpl implements EntityTypeHandler<User> {
   @Transactional
   public String add(String[] command) {
     User user = new User();
-    user.setUserName(command[ADD_USER_NAME_POS]);
+    user.setUsername(command[ADD_USER_NAME_POS]);
     return "User added / id: " + userRepoService.add(user);
   }
 

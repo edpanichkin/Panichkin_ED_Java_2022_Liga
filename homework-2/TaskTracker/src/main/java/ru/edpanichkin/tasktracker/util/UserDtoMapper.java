@@ -12,7 +12,7 @@ public class UserDtoMapper {
   public static UserWithTasksDto queryEntityToDto(User user) {
     UserWithTasksDto userWithTasksDto = new UserWithTasksDto();
     userWithTasksDto.setId(user.getId());
-    userWithTasksDto.setUserName(user.getUserName());
+    userWithTasksDto.setUserName(user.getUsername());
     userWithTasksDto.setTasks(user.getTaskList().stream()
             .map(TaskDtoMapper::queryEntityToDto)
             .collect(Collectors.toList()));
@@ -26,7 +26,7 @@ public class UserDtoMapper {
     }
     UserWithTasksDto userWithTasksDto = new UserWithTasksDto();
     userWithTasksDto.setId(user.getId());
-    userWithTasksDto.setUserName(user.getUserName());
+    userWithTasksDto.setUserName(user.getUsername());
     userWithTasksDto.setTasks(taskList.stream().map(TaskDtoMapper::queryEntityToDto).collect(Collectors.toList()));
     return userWithTasksDto;
   }
